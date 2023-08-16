@@ -4,12 +4,13 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include "Carte.h"
 
 using namespace std;
 
 class Account {
 private:
-    //vector<Carte> carte;
+    vector<Carte> carte;
     string nome, cognome, email;
     unsigned long int numeroTelefono, eta;
 
