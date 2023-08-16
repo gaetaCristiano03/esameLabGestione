@@ -1,5 +1,9 @@
 #include <iostream>
 #include <windows.h>
+#include "Finanza.h"
+#include "Account.h"
+#include "Carte.h"
+#include "Transazione.h"
 
 using namespace std;
 
@@ -10,11 +14,18 @@ int sl = 100;
 int main() {
     int scelta = 0;
 
+    Finanza finanza;
+    Account account;
+    Carte carta;
+    Transazione transazione;
+
+
     do {
         scelta = stampaMenu();
 
         switch(scelta) {
             case 1:
+                finanza.stampaMenuAccount();
                 break;
             case 2:
                 break;

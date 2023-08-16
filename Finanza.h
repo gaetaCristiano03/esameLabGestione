@@ -13,6 +13,8 @@ private:
 public:
     Finanza();
 
+    void stampaMenuAccount();
+
 };
 
 #endif //ESAMELABGESTIONE_FINANZA_H
