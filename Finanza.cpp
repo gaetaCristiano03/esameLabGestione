@@ -57,6 +57,7 @@ void Finanza :: stampaMenuAccount() {
 bool Finanza :: cercaAccount(const Account account) {
     for(int i = 0; i < accounts.size(); i++) {
         if(accounts[i].getNumeroTelefono() == account.getNumeroTelefono())
+            cout << endl;
             return true;
     }
     return false;

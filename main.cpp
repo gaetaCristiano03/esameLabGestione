@@ -8,11 +8,14 @@
 using namespace std;
 
 int stampaMenu();
+void stampaMenuCarte(Finanza finanza, Account account);
 
 int sl = 100;
+string nome, cognome, email;
+unsigned long int numeroTelefono, eta;
 
 int main() {
-    int scelta = 0;
+    int scelta, sceltaMenuCarte;
 
     Finanza finanza;
     Account account;
@@ -25,19 +28,21 @@ int main() {
 
         switch(scelta) {
             case 1:
-                finanza.stampaMenuAccount();
+                finanza.stampaMenuAccount(); //COMPLETATO.
                 break;
             case 2:
-                account.stampaMenuCarte();
+                stampaMenuCarte(finanza, account);
                 break;
             case 3:
                 break;
             case 4:
                 break;
+            case 5:
+                break;
         }
 
 
-    } while(scelta >= 0 && scelta <= 4);
+    } while(scelta >= 0 && scelta <= 5);
 
     return 0;
 }
@@ -62,12 +67,56 @@ int stampaMenu() {
     cout << "0. Esci dal programma;"   << endl; Sleep(sl);
     cout << "1. Gestione utenti;"      << endl; Sleep(sl);
     cout << "2. Gestione conti/carte;" << endl; Sleep(sl);
-    cout << "3. Visualizzazione dati;" << endl; Sleep(sl);
-    cout << "4. Ripristina file."      << endl; Sleep(sl);
+    cout << "3. Esegui transazioni;"   << endl; Sleep(sl);
+    cout << "4. Visualizzazione dati;" << endl; Sleep(sl);
+    cout << "5. Ripristina file."      << endl; Sleep(sl);
 
     cout << "Inserisci la tua scelta ->  "; Sleep(sl);
     cin >> scelta;
     cout << endl;
 
     return scelta;
+}
+
+void stampaMenuCarte(Finanza finanza, Account account) {
+    int scelta;
+
+    cout << "GESTIONE CONTI/CARTE:" << endl;
+    cout << "1. Aggiungi una nuova carta;" << endl;
+    cout << "2. Modifica una carta gia' esistente;" << endl;
+    cout << "3. Elimina una carta." << endl;
+    cout << "4. Torna indietro." << endl;
+
+    cout << "Scegli una delle seguenti opzioni -> ";
+    cin >> scelta;
+    cout << endl;
+
+    while (scelta < 1 || scelta > 5) {
+        cout << "Inserimento I/O errato, riprovare." << endl;
+        cout << "Scegli una opzione -> ";
+        cin >> scelta;
+    }
+    cout << endl;
+
+    switch(scelta) {
+        case 1:
+            bool controllo;
+            Account acc;
+
+            do {
+                finanza.inserisciDatiAccount(nome, cognome, email, numeroTelefono, eta);
+                acc = Account(nome, cognome, email, numeroTelefono, eta);
+                controllo = finanza.cercaAccount(acc);
+            } while(controllo == false);
+
+            account.creazioneCarta(acc);
+            break;
+
+        case 2:
+            account.modificaCarta();
+            break;
+        case 3:
+            //account.eliminaCarta();
+            break;
+    }
 }
