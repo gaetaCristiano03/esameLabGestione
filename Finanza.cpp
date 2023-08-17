@@ -46,24 +46,12 @@ void Finanza :: stampaMenuAccount() {
             creazioneAccount();
             break;
         case 2:
-            //modificaAccount();
+            modificaAccount();
             break;
         case 3:
-            //eliminaAccount();
+            eliminaAccount();
             break;
     }
-}
-
-bool Finanza :: cercaAccount() {
-    inserisciDatiAccount(nome, cognome, email, numeroTelefono, eta);
-    Account account(nome, cognome, email, numeroTelefono, eta);
-
-    for(int i = 0; i < accounts.size(); i++) {
-        if(accounts[i].getNumeroTelefono() == account.getNumeroTelefono())
-            return true;
-    }
-    return false;
-
 }
 
 bool Finanza :: cercaAccount(const Account account) {

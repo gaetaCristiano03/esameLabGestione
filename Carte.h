@@ -14,7 +14,26 @@ private:
     string iban;
 
 public:
-    Carte() {};
+    Carte();
+
+    Carte(const int &numeroConto, const int &dataScadenza, const int &salario, const string &iban);
+
+//Getter & Setter:
+    int getNumeroConto() const {
+        return numeroConto;
+    }
+
+    int getDataScadenza() const {
+        return dataScadenza;
+    }
+
+    int getSaldo() const {
+        return saldo;
+    }
+
+    string getIban() const {
+        return iban;
+    }
 
 };
 

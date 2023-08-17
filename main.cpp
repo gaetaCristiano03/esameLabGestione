@@ -28,6 +28,7 @@ int main() {
                 finanza.stampaMenuAccount();
                 break;
             case 2:
+                account.stampaMenuCarte();
                 break;
             case 3:
                 break;

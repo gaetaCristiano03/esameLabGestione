@@ -17,9 +17,7 @@ public:
 
     void stampaMenuAccount();
 
-    virtual bool cercaAccount();
-
-    bool cercaAccount(Account account);
+    bool cercaAccount(const Account account);
 
     void creazioneAccount();
 

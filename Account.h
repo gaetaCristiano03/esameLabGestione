@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include "Finanza.h"
 #include "Carte.h"
 
 using namespace std;
@@ -18,6 +19,10 @@ public:
     Account();
 
     Account(const string &nome, const string &cognome, const string &email, const unsigned long int &numeroTelefono, const unsigned long int &eta);
+
+    void stampaMenuCarte(Finanza finanza);
+
+    void creazioneCarta(Finanza finanza);
 
     //Getter and Setter
     string getNome() const {
