@@ -16,8 +16,8 @@ int main() {
 
     Finanza finanza;
     Account account;
-    Carte carta;
-    Transazione transazione;
+    //Carte carta;
+    //Transazione transazione;
 
 
     do {
@@ -58,7 +58,7 @@ int stampaMenu() {
     cout << "| | | | | | | (_| | | | |/ /| | (_| | |  | | (_| |  _       " << endl; Sleep(sl);
     cout << "|_| |_|_| |_|\\__,_|_| |_/___|_|\\__,_|_|  |_|\\__,_| (_)   " << endl; Sleep(sl);
 
-    cout << "0. Esci dal programma."   << endl; Sleep(sl);
+    cout << "0. Esci dal programma;"   << endl; Sleep(sl);
     cout << "1. Gestione utenti;"      << endl; Sleep(sl);
     cout << "2. Gestione conti/carte;" << endl; Sleep(sl);
     cout << "3. Visualizzazione dati;" << endl; Sleep(sl);
@@ -67,4 +67,6 @@ int stampaMenu() {
     cout << "Inserisci la tua scelta ->  "; Sleep(sl);
     cin >> scelta;
     cout << endl;
+
+    return scelta;
 }

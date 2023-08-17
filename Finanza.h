@@ -13,7 +13,17 @@ private:
 public:
     Finanza();
 
+    void inserisciDatiAccount(string &nome, string &cognome, string &email, unsigned long int &num, unsigned long int &eta);
+
     void stampaMenuAccount();
+
+    virtual bool cercaAccount();
+
+    bool cercaAccount(Account account);
+
+    void creazioneAccount();
+
+    void modificaAccount();
 
 };
 
