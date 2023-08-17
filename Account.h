@@ -19,11 +19,15 @@ public:
 
     Account(const string &nome, const string &cognome, const string &email, const unsigned long int &numeroTelefono, const unsigned long int &eta);
 
+    void inserisciDatiCarta(int &numeroConto, int &dataScadenza, int &saldo, string &iban);
+
     bool cercaCarta(Carte carta);
 
     void creazioneCarta(Account account);
 
     void modificaCarta();
+
+    void eliminaCarta();
 
     //Getter and Setter
     string getNome() const {

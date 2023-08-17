@@ -31,14 +31,21 @@ int main() {
             case 1:
                 finanza.stampaMenuAccount(); //COMPLETATO.
                 break;
+
             case 2:
-                stampaMenuCarte(finanza, account);
+                stampaMenuCarte(finanza, account); //COMPLETATO.
                 break;
+
             case 3:
                 break;
+
             case 4:
                 break;
+
             case 5:
+                ofstream file("Salvataggio_dati.txt", ios::trunc);
+                file.close();
+                cout << "File ripristinato!" << endl;
                 break;
         }
 
@@ -121,11 +128,10 @@ void stampaMenuCarte(Finanza finanza, Account &account) {
         cout << "AREA MODIFICA CARTA:" << endl;
         cout << "Inserisci i dati dell'utente a cui e' intestata la carta:" << endl;
         Account acc = controlloEsistenzaAccount(finanza);
-
         account.modificaCarta();
     }
 
     else if(scelta == 3) {
-        //account.eliminaCarta();
+        account.eliminaCarta();
     }
 }

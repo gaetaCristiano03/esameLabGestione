@@ -109,11 +109,11 @@ void Finanza :: modificaAccount() {
                     string line;
 
                     while (getline(file, line)) {
-                        if (line == "Utente: Nome: " + accountPre.getNome() + ";   Cognome: " + accountPre.getCognome() + ";   Email: "
+                        if (line == "Utente -> Nome: " + accountPre.getNome() + ";   Cognome: " + accountPre.getCognome() + ";   Email: "
                                     + accountPre.getEmail() + ";   Cellulare: " + to_string(accountPre.getNumeroTelefono()) +
                                     ";   Eta: " + to_string(accountPre.getEta()) + ";") {
 
-                            line = "Utente: Nome: " + accountPost.getNome() + ";   Cognome: " + accountPost.getCognome() + ";   Email: "
+                            line = "Utente -> Nome: " + accountPost.getNome() + ";   Cognome: " + accountPost.getCognome() + ";   Email: "
                                    + accountPost.getEmail() + ";   Cellulare: " + to_string(accountPost.getNumeroTelefono()) +
                                    ";   Eta: " + to_string(accountPost.getEta()) + ";";
                         }
