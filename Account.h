@@ -19,6 +19,8 @@ public:
 
     Account(const string &nome, const string &cognome, const string &email, const unsigned long int &numeroTelefono, const unsigned long int &eta);
 
+    bool cercaCarta(Carte carta);
+
     void creazioneCarta(Account account);
 
     void modificaCarta();

@@ -5,6 +5,7 @@ using namespace std;
 
 int numeroConto, dataScadenza, saldo;
 string iban;
+bool controlloEs;
 
 Account :: Account() {};
 
@@ -21,6 +22,12 @@ void inserisciDatiCarta(int &numeroConto, int &dataScadenza, int &saldo, string 
     cin >> saldo;
     cout << "4. Iban -> ";
     cin >> iban;
+}
+
+bool cercaCarta(Carte carta) {
+    for(int i = 0; i < carte.size(); i++) {
+
+    }
 }
 
 void Account :: creazioneCarta(Account account) {
@@ -46,5 +53,10 @@ void Account :: creazioneCarta(Account account) {
     file.close();
 }
 
-void Account :: modificaCarta() {}
+void Account :: modificaCarta() {
+
+    inserisciDatiCarta(numeroConto, dataScadenza, saldo, iban);
+    Carte cartaPre(numeroConto, dataScadenza, saldo, iban);
+    controlloEs = cercaCarta(cartaPre);
+}
 

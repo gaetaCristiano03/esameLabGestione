@@ -7,15 +7,16 @@
 
 using namespace std;
 
+Account controlloEsistenzaAccount(Finanza finanza);
 int stampaMenu();
-void stampaMenuCarte(Finanza finanza, Account account);
+void stampaMenuCarte(Finanza finanza, Account &account);
 
 int sl = 100;
-string nome, cognome, email;
-unsigned long int numeroTelefono, eta;
+string no, cog, em;
+unsigned long int numeroTel, et;
 
 int main() {
-    int scelta, sceltaMenuCarte;
+    int scelta;
 
     Finanza finanza;
     Account account;
@@ -45,6 +46,19 @@ int main() {
     } while(scelta >= 0 && scelta <= 5);
 
     return 0;
+}
+
+Account controlloEsistenzaAccount(Finanza finanza) {
+    bool controllo;
+    Account acc;
+
+    do {
+        finanza.inserisciDatiAccount(no, cog, em, numeroTel, et);
+        acc = Account(no, cog, em, numeroTel, et);
+        controllo = finanza.cercaAccount(acc);
+    } while(controllo == false);
+
+    return acc;
 }
 
 int stampaMenu() {
@@ -78,7 +92,7 @@ int stampaMenu() {
     return scelta;
 }
 
-void stampaMenuCarte(Finanza finanza, Account account) {
+void stampaMenuCarte(Finanza finanza, Account &account) {
     int scelta;
 
     cout << "GESTIONE CONTI/CARTE:" << endl;
@@ -98,25 +112,20 @@ void stampaMenuCarte(Finanza finanza, Account account) {
     }
     cout << endl;
 
-    switch(scelta) {
-        case 1:
-            bool controllo;
-            Account acc;
+    if(scelta == 1) {
+        Account acc = controlloEsistenzaAccount(finanza);
+        account.creazioneCarta(acc);
+    }
 
-            do {
-                finanza.inserisciDatiAccount(nome, cognome, email, numeroTelefono, eta);
-                acc = Account(nome, cognome, email, numeroTelefono, eta);
-                controllo = finanza.cercaAccount(acc);
-            } while(controllo == false);
+    else if(scelta == 2) {
+        cout << "AREA MODIFICA CARTA:" << endl;
+        cout << "Inserisci i dati dell'utente a cui e' intestata la carta:" << endl;
+        Account acc = controlloEsistenzaAccount(finanza);
 
-            account.creazioneCarta(acc);
-            break;
+        account.modificaCarta();
+    }
 
-        case 2:
-            account.modificaCarta();
-            break;
-        case 3:
-            //account.eliminaCarta();
-            break;
+    else if(scelta == 3) {
+        //account.eliminaCarta();
     }
 }
