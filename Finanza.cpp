@@ -147,4 +147,50 @@ void Finanza :: modificaAccount() {
         }
     }
     else cout << "Account non trovato, controllare dati." << endl;
+    controlloEsistenza = true;
+}
+
+void Finanza :: eliminaAccount() {
+    inserisciDatiAccount(nome, cognome, email, numeroTelefono, eta);
+    Account account(nome, cognome, email, numeroTelefono, eta);
+
+    for(int i = 0; i < accounts.size(); i++) {
+        if(accounts[i].getNumeroTelefono() == account.getNumeroTelefono()) {
+            auto pos = i + accounts.begin();
+            accounts.erase(pos);
+
+            cout << "Eliminazione completata!" << endl;
+
+            ifstream file("Salvataggio_dati.txt");
+
+            if (file.is_open()) {
+                vector<string> lines;
+                string line;
+
+                while (getline(file, line)) {
+                    if (line != "Utente: Nome: " + account.getNome() + ";   Cognome: " + account.getCognome() + ";   Email: "
+                                + account.getEmail() + ";   Cellulare: " + to_string(account.getNumeroTelefono()) +
+                                ";   Eta: " + to_string(account.getEta()) + ";") {
+                        lines.push_back(line);
+                    }
+                }
+                file.close();
+
+                ofstream file("Salvataggio_dati.txt");
+
+                if (file.is_open()) {
+                    for (const auto& line : lines) {
+                        file << line << endl;
+                    }
+
+                    file.close();
+
+                    cout << "Le righe sono state eliminate dal file." << endl;
+                }
+            }
+            break;
+        }
+    }
+    cout << "Account non trovato, riprovare." << endl;
+
 }

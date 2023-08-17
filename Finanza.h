@@ -25,6 +25,8 @@ public:
 
     void modificaAccount();
 
+    void eliminaAccount();
+
 };
 
 #endif //ESAMELABGESTIONE_FINANZA_H
