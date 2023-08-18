@@ -17,6 +17,8 @@ public:
 
     void stampaMenuAccount();
 
+    void stampaMenuVisualizzazioni(Account account, Carte carte);
+
     bool cercaAccount(const Account account);
 
     void creazioneAccount();
@@ -28,6 +30,14 @@ public:
     void eseguiOperazionePrelievo(Account account, Carte carta, Account acc, Carte car);
 
     void eseguiOperazioneDeposito(Account account, Carte carta, Account acc, Carte car);
+
+    void stampaDatiAccount();
+
+    void stampaDatiCarte(Account account);
+
+    void stampaTransazioni(Account account, Carte carta);
+
+    void stampaTransazioniAccount(Account account, Carte carta);
 
 };
 

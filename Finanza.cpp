@@ -54,6 +54,43 @@ void Finanza :: stampaMenuAccount() {
     }
 }
 
+void Finanza :: stampaMenuVisualizzazioni(Account account, Carte carta) {
+    int scelta;
+
+    cout << "VISUALIZZAZIONE DATI:" << endl;
+    cout << "1. Dati di tutti gli utenti;" << endl;
+    cout << "2. Carte di ogni utente;" << endl;
+    cout << "3. Tutte le transazioni;" << endl;
+    cout << "4. Transazione di ogni utente." << endl;
+
+    cout << "Scegli una delle seguenti opzioni -> ";
+    cin >> scelta;
+    cout << endl;
+
+    while (scelta < 1 || scelta > 4) {
+        cout << "Inserimento I/O errato, riprovare." << endl;
+        cout << "Scegli una opzione -> ";
+        cin >> scelta;
+    }
+    cout << endl;
+
+    switch(scelta) {
+        case 1:
+            stampaDatiAccount();
+            break;
+        case 2:
+            stampaDatiCarte(account);
+            break;
+        case 3:
+            stampaTransazioni(account, carta);
+            break;
+        case 4:
+            stampaTransazioniAccount(account, carta);
+            break;
+    }
+
+}
+
 bool Finanza :: cercaAccount(const Account account) {
     for(int i = 0; i < accounts.size(); i++) {
         if(accounts[i].getNumeroTelefono() == account.getNumeroTelefono())
@@ -264,5 +301,69 @@ void Finanza :: eseguiOperazioneDeposito(Account account, Carte carta, Account a
             }
 
         }
+    }
+}
+
+void Finanza :: stampaDatiAccount() {
+    int indice = 1;
+    cout << "STAMPA DATI DI TUTTI GLI UTENTI:" << endl;
+
+    for(int i = 0; i < accounts.size(); i++) {
+        indice += i;
+        cout << indice << "' " << accounts[i].getNome() << " " << accounts[i].getCognome() << ", " << accounts[i].getEmail()
+             << ", " << accounts[i].getEta() << ", " << accounts[i].getNumeroTelefono() << ";" << endl;
+    }
+
+}
+
+void Finanza :: stampaDatiCarte(Account account) {
+    int indice = 1;
+
+    for(int i = 0; i < accounts.size(); i++) {
+        indice += i;
+        cout << indice << "' " << accounts[i].getNome() << " " << accounts[i].getCognome() << ":" << endl;
+
+        for(int j = 0; j < account.getCarte().size(); j++) {
+            indice += j;
+            cout << "  " << indice << "' " << account.getCarte()[j].getNumeroConto() << ", " << account.getCarte()[j].getIban()
+                 << ", " << account.getCarte()[j].getDataScadenza() << ", " << account.getCarte()[j].getSaldo() << ";" << endl;
+        }
+        indice = i + 1;
+    }
+}
+
+void Finanza :: stampaTransazioni(Account account, Carte carta) {
+    int indice = 1;
+
+    for(int i = 0; i < accounts.size(); i++) {
+        for(int j = 0; j < account.getCarte().size(); j++) {
+            for(int k = 0; k < carta.getTransazioni().size(); k++) {
+                cout << "  " << indice << "' " << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
+                     << ", " << carta.getTransazioni()[k].getGiorno() << ";" << endl;
+                indice++;
+            }
+        }
+    }
+}
+
+void Finanza :: stampaTransazioniAccount(Account account, Carte carta) {
+    int indice = 1;
+
+    for(int i = 0; i < accounts.size(); i++) {
+        indice += i;
+        cout << indice << "' " << accounts[i].getNome() << " " << accounts[i].getCognome() << ":" << endl;
+
+        for(int j = 0; j < account.getCarte().size(); j++) {
+            indice += j;
+            cout << "  " << indice << "' " << account.getCarte()[j].getNumeroConto() << ", " << account.getCarte()[j].getIban() << ";" << endl;
+
+            for(int k = 0; k < carta.getTransazioni().size(); k++) {
+                indice += k;
+                cout << "  " << indice << "' " << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
+                     << ", " << carta.getTransazioni()[k].getGiorno() << ";" << endl;
+            }
+            indice = j + 1;
+        }
+        indice = i + 1;
     }
 }

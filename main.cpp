@@ -41,7 +41,7 @@ int main() {
                 break;
 
             case 4:
-                finanza.stampaMenuVisualizzazioni();
+                finanza.stampaMenuVisualizzazioni(account, carta);
                 break;
 
             case 5:
