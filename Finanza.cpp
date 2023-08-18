@@ -92,7 +92,7 @@ void Finanza :: modificaAccount() {
     Account accountPre(nome, cognome, email, numeroTelefono, eta);
     controlloEsistenza = cercaAccount(accountPre);
 
-    if(controlloEsistenza) {
+    if(controlloEsistenza == true) {
         cout << endl <<"Ora inserisci i nuovi dati: " << endl;
         inserisciDatiAccount(nome, cognome, email, numeroTelefono, eta);
         Account accountPost(nome, cognome, email, numeroTelefono, eta);
@@ -157,7 +157,7 @@ void Finanza :: eliminaAccount() {
                 string line;
 
                 while (getline(file, line)) {
-                    if (line != "Utente: Nome: " + account.getNome() + ";   Cognome: " + account.getCognome() + ";   Email: "
+                    if (line != "Utente -> Nome: " + account.getNome() + ";   Cognome: " + account.getCognome() + ";   Email: "
                                 + account.getEmail() + ";   Cellulare: " + to_string(account.getNumeroTelefono()) +
                                 ";   Eta: " + to_string(account.getEta()) + ";") {
                         lines.push_back(line);
@@ -173,13 +173,11 @@ void Finanza :: eliminaAccount() {
                     }
 
                     file.close();
-
                     cout << "Le righe sono state eliminate dal file." << endl;
                 }
             }
             break;
         }
+        else cout << "Account non trovato, riprovare." << endl;
     }
-    cout << "Account non trovato, riprovare." << endl;
-
 }

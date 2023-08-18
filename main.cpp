@@ -17,12 +17,10 @@ unsigned long int numeroTel, et;
 
 int main() {
     int scelta;
-
     Finanza finanza;
     Account account;
-    //Carte carta;
-    //Transazione transazione;
-
+    Carte carta;
+    Transazione transazione;
 
     do {
         scelta = stampaMenu();
