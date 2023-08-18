@@ -8,11 +8,13 @@
 using namespace std;
 
 Account controlloEsistenzaAccount(Finanza finanza);
+Carte controlloEsistenzaCarte(Account account);
 int stampaMenu();
 void stampaMenuCarte(Finanza finanza, Account &account);
+void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta);
 
-int sl = 100;
-string no, cog, em;
+int sl = 100, numeroCon, dataScad, sal;
+string no, cog, em, ib;
 unsigned long int numeroTel, et;
 
 int main() {
@@ -35,6 +37,7 @@ int main() {
                 break;
 
             case 3:
+                stampaMenuTransazioni(finanza, account, carta);
                 break;
 
             case 4:
@@ -64,6 +67,17 @@ Account controlloEsistenzaAccount(Finanza finanza) {
     } while(controllo == false);
 
     return acc;
+}
+
+Carte controlloEsistenzaCarte(Account account) {
+    bool control;
+    Carte carta;
+
+    do {
+        account.inserisciDatiCarta(numeroCon, dataScad, sal, ib);
+        carta = Carte(numeroCon, dataScad, sal, ib);
+        control = account.cercaCarta(carta);
+    } while(control == false);
 }
 
 int stampaMenu() {
@@ -132,4 +146,24 @@ void stampaMenuCarte(Finanza finanza, Account &account) {
     else if(scelta == 3) {
         account.eliminaCarta();
     }
+}
+
+void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta) {
+    cout << "TRANSAZIONI PRELIEVO / DEPOSITO:" << endl;
+    cout << "Inserisci alcuni dati dell'utente per trovarlo:" << endl;
+    Account acc = controlloEsistenzaAccount(finanza);
+
+    cout << endl << "Ora inserisci i dati della carta: " << endl;
+    Carte car = controlloEsistenzaCarte(acc);
+
+    int scelta;
+    cout << endl << "Perfetto! Ora scegli la tua operazione:" << endl;
+    cout << "1. Operazione prelievo;" << endl;
+    cout << "2. Operazione deposito." << endl;
+    cin >> scelta;
+
+    if(scelta == 1)
+        finanza.eseguiOperazionePrelievo(account, carta, acc, car);
+    else
+        finanza.eseguiOperazioneDeposito(account, carta, acc, car);
 }

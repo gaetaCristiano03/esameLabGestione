@@ -1,8 +1,8 @@
 #include <iostream>
 #include "Finanza.h"
 
-string nome, cognome, email;
-unsigned long int numeroTelefono, eta;
+string nome, cognome, email, giorno;
+unsigned long int numeroTelefono, eta, date, importo;
 bool controlloEsistenza = true;
 
 Finanza :: Finanza() {};
@@ -180,4 +180,22 @@ void Finanza :: eliminaAccount() {
         }
         else cout << "Account non trovato, riprovare." << endl;
     }
+}
+
+void Finanza :: eseguiOperazionePrelievo(Account account, Carte carta, Account acc, Carte car) {
+    carta.inserisciDatiTransazione(date, importo, giorno);
+    Transazione transazione(date, importo, giorno);
+
+    for(int i = 0; i < accounts.size(); i++) {
+        if(acc.getNumeroTelefono() == accounts[i].getNumeroTelefono()) {
+
+            for(int j = 0; j < account.getCarte().size(); j++) {
+                if(carta.getIban() == account.getCarte()[j].getIban()) {
+
+                }
+            }
+
+        }
+    }
+
 }

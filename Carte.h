@@ -16,7 +16,9 @@ private:
 public:
     Carte();
 
-    Carte(const int &numeroConto, const int &dataScadenza, const int &salario, const string &iban);
+    Carte(const int &numeroConto, const int &dataScadenza, const int &saldo, const string &iban);
+
+    void inserisciDatiTransazione(int date, int importo, string giorno);
 
 //Getter & Setter:
     int getNumeroConto() const {
@@ -33,6 +35,10 @@ public:
 
     string getIban() const {
         return iban;
+    }
+
+    const vector<Transazione> &getTransazioni() const {
+        return transazioni;
     }
 
 };

@@ -25,6 +25,10 @@ public:
 
     void eliminaAccount();
 
+    void eseguiOperazionePrelievo(Account account, Carte carta, Account acc, Carte car);
+
+    void eseguiOperazioneDeposito(Account account, Carte carta, Account acc, Carte car);
+
 };
 
 #endif //ESAMELABGESTIONE_FINANZA_H
