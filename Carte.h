@@ -20,6 +20,8 @@ public:
 
     void inserisciDatiTransazione(int date, int importo, string giorno);
 
+    void inserisciTransazione(Transazione transazione);
+
 //Getter & Setter:
     int getNumeroConto() const {
         return numeroConto;
@@ -31,6 +33,10 @@ public:
 
     int getSaldo() const {
         return saldo;
+    }
+
+    void setSal(int sal) {
+        saldo = sal;
     }
 
     string getIban() const {

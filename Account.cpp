@@ -159,3 +159,12 @@ void Account :: eliminaCarta() {
     }
     controlloEs = false;
 }
+
+void Account :: setSaldo(int scelta, int indice, int importo) {
+    int n;
+    if(scelta == 1)
+        n = carte[indice].getSaldo() - importo;
+    else
+        n = carte[indice].getSaldo() + importo;
+    carte[indice].setSal(n);
+}

@@ -29,11 +29,11 @@ int main() {
 
         switch(scelta) {
             case 1:
-                finanza.stampaMenuAccount(); //COMPLETATO.
+                finanza.stampaMenuAccount();
                 break;
 
             case 2:
-                stampaMenuCarte(finanza, account); //COMPLETATO.
+                stampaMenuCarte(finanza, account);
                 break;
 
             case 3:
@@ -41,6 +41,7 @@ int main() {
                 break;
 
             case 4:
+                finanza.stampaMenuVisualizzazioni();
                 break;
 
             case 5:

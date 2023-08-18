@@ -192,10 +192,77 @@ void Finanza :: eseguiOperazionePrelievo(Account account, Carte carta, Account a
             for(int j = 0; j < account.getCarte().size(); j++) {
                 if(carta.getIban() == account.getCarte()[j].getIban()) {
 
+                    if(account.getCarte()[j].getSaldo() > transazione.getImporto()) {
+                        carta.inserisciTransazione(transazione);
+                        account.setSaldo(1, j, transazione.getImporto());
+                    }
+                    else cout << "Errore nell'operazione." << endl;
+
+                    ofstream file("Salvataggio_dati.txt", ios::app);
+
+                    if (file.is_open()) {
+
+                        string lineNameUser = "Prelievo su carta di " + account.getNome() + " " + account.getCognome() + ":";
+                        file << lineNameUser << endl;
+
+                        string lineCont = " Numero carta -> " + to_string(carta.getNumeroConto()) + ", Data scadenza -> " +
+                                          to_string(carta.getDataScadenza()) + ", Salario -> " + to_string(carta.getSaldo())
+                                          + ", Iban -> " + carta.getIban() + ";";
+                        file << lineCont << endl;
+
+                        string lineTrans = " Data -> " + to_string(transazione.getData()) + ", Giorno -> " + transazione.getGiorno()
+                                           + ", Importo -> " + to_string(transazione.getImporto()) + ";";
+                        file << lineTrans << endl << endl;
+
+                        cout << "Transazione completata!" << endl;
+                    }
+                    else cout << "Impossibile aprire il file." << endl;
+
+                    file.close();
                 }
             }
 
         }
     }
 
+}
+
+void Finanza :: eseguiOperazioneDeposito(Account account, Carte carta, Account acc, Carte car) {
+    carta.inserisciDatiTransazione(date, importo, giorno);
+    Transazione transazione(date, importo, giorno);
+
+    for(int i = 0; i < accounts.size(); i++) {
+        if (acc.getNumeroTelefono() == accounts[i].getNumeroTelefono()) {
+
+            for (int j = 0; j < account.getCarte().size(); j++) {
+                if (carta.getIban() == account.getCarte()[j].getIban()) {
+                    carta.inserisciTransazione(transazione);
+                    account.setSaldo(2, j, transazione.getImporto());
+
+                    ofstream file("Salvataggio_dati.txt", ios::app);
+
+                    if (file.is_open()) {
+
+                        string lineNameUser = "Deposito su carta di " + account.getNome() + " " + account.getCognome() + ":";
+                        file << lineNameUser << endl;
+
+                        string lineCont = " Numero carta -> " + to_string(carta.getNumeroConto()) + ", Data scadenza -> " +
+                                          to_string(carta.getDataScadenza()) + ", Salario -> " + to_string(carta.getSaldo())
+                                          + ", Iban -> " + carta.getIban() + ";";
+                        file << lineCont << endl;
+
+                        string lineTrans = " Data -> " + to_string(transazione.getData()) +  ", Giorno -> " + transazione.getGiorno()
+                                           + ", Importo -> " + to_string(transazione.getImporto()) + ";";
+                        file << lineTrans << endl << endl;
+
+                        cout << "Transazione completata!" << endl;
+                    }
+                    else cout << "Impossibile aprire il file." << endl;
+
+                    file.close();
+                }
+            }
+
+        }
+    }
 }

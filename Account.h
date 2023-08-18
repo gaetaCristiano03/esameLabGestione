@@ -29,6 +29,8 @@ public:
 
     void eliminaCarta();
 
+    void setSaldo(int scelta, int indice, int importo);
+
     //Getter and Setter
     string getNome() const {
         return nome;
