@@ -15,6 +15,8 @@ public:
 
     void inserisciDatiAccount(string &nome, string &cognome, string &email, unsigned long int &num, unsigned long int &eta);
 
+    void controlloDatiNelFile(Account acPre, Account acPost);
+
     void stampaMenuAccount();
 
     void stampaMenuVisualizzazioni(Account account, Carte carte);

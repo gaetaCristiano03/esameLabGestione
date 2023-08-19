@@ -13,7 +13,7 @@ int stampaMenu();
 void stampaMenuCarte(Finanza finanza, Account &account);
 void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta);
 
-int sl = 100, numeroCon, dataScad, sal;
+int sl = 20, numeroCon, dataScad, sal;
 string no, cog, em, ib;
 unsigned long int numeroTel, et;
 
@@ -51,7 +51,6 @@ int main() {
                 break;
         }
 
-
     } while(scelta >= 0 && scelta <= 5);
 
     return 0;
@@ -79,6 +78,9 @@ Carte controlloEsistenzaCarte(Account account) {
         carta = Carte(numeroCon, dataScad, sal, ib);
         control = account.cercaCarta(carta);
     } while(control == false);
+
+    return carta;
+
 }
 
 int stampaMenu() {
@@ -145,7 +147,10 @@ void stampaMenuCarte(Finanza finanza, Account &account) {
     }
 
     else if(scelta == 3) {
-        account.eliminaCarta();
+        cout << "AREA ELIMINAZIONE CARTA:" << endl;
+        cout << "Inserisci i dati dell'utente a cui e' intestata la carta:" << endl;
+        Account acc = controlloEsistenzaAccount(finanza);
+        account.eliminaCarta(acc);
     }
 }
 

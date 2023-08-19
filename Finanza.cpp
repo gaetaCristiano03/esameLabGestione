@@ -3,7 +3,7 @@
 
 string nome, cognome, email, giorno;
 unsigned long int numeroTelefono, eta, date, importo;
-bool controlloEsistenza = true;
+bool controlloEsistenza;
 
 Finanza :: Finanza() {};
 
@@ -19,6 +19,30 @@ void Finanza :: inserisciDatiAccount(string &nome, string &cognome, string &emai
     cin >> num;
     cout << "5. Eta -> ";
     cin >> eta;
+}
+
+void Finanza ::controlloDatiNelFile(Account accountPre, Account accountPost) {
+    ifstream file("Salvataggio_dati.txt");
+
+    if (file.is_open()) {
+        vector<string> lines;
+        string line;
+
+        while (getline(file, line)) {
+            if (line == "Conto di " + accountPre.getNome() + " " + accountPre.getCognome() + ":") {
+                line = "Conto di " + accountPost.getNome() + " " + accountPost.getCognome() + ":";
+            }
+            lines.push_back(line);
+        }
+
+        ofstream file("Salvataggio_dati.txt");
+
+        for (const auto &line: lines) {
+            file << line << endl;
+        }
+        file.close();
+        cout << " Modifica del file eseguita!" << endl;
+    }
 }
 
 void Finanza :: stampaMenuAccount() {
@@ -93,9 +117,16 @@ void Finanza :: stampaMenuVisualizzazioni(Account account, Carte carta) {
 
 bool Finanza :: cercaAccount(const Account account) {
     for(int i = 0; i < accounts.size(); i++) {
-        if(accounts[i].getNumeroTelefono() == account.getNumeroTelefono())
-            cout << endl;
-            return true;
+        if(accounts[i].getNome() == account.getNome()) {
+            if(accounts[i].getCognome() == account.getCognome()) {
+                if(accounts[i].getEmail() == account.getEmail()) {
+                    if(accounts[i].getEta() == account.getEta()) {
+                        if(accounts[i].getNumeroTelefono() == account.getNumeroTelefono())
+                            return true;
+                    }
+                }
+            }
+        }
     }
     return false;
 }
@@ -104,23 +135,34 @@ void Finanza :: creazioneAccount() {
     inserisciDatiAccount(nome, cognome, email, numeroTelefono, eta);
     Account account(nome, cognome, email, numeroTelefono, eta);
 
-    accounts.push_back(account);
-    cout << "Creazione utente completata!" << endl;
+    controlloEsistenza = cercaAccount(account);
 
-    ofstream file("Salvataggio_dati.txt", ios::app);
-
-    if(file.is_open()) {
-        string line = "Utente -> Nome: " + account.getNome() + ";   Cognome: " + account.getCognome() + ";   Email: "
-                      + account.getEmail() + ";   Cellulare: " + to_string(account.getNumeroTelefono()) +
-                      ";   Eta: " + to_string(account.getEta()) + ";";
-
-        file << line << endl << endl;
-
-        cout << " Dati inseriti con successo." << endl;
+    for(int i = 0; i < accounts.size(); i++) {
+        if(accounts[i].getNumeroTelefono() == account.getNumeroTelefono())
+            controlloEsistenza = true;
     }
-    else cout << "Impossibile aprire il file." << endl;
 
-    file.close();
+    if(controlloEsistenza == false) {
+        accounts.push_back(account);
+        cout << "Creazione utente completata!" << endl;
+
+        ofstream file("Salvataggio_dati.txt", ios::app);
+
+        if (file.is_open()) {
+            string line =
+                    "Utente -> Nome: " + account.getNome() + ";   Cognome: " + account.getCognome() + ";   Email: "
+                    + account.getEmail() + ";   Cellulare: " + to_string(account.getNumeroTelefono()) +
+                    ";   Eta: " + to_string(account.getEta()) + ";";
+
+            file << line << endl << endl;
+
+            cout << " Dati inseriti con successo." << endl;
+        }
+        else cout << "Impossibile aprire il file." << endl;
+
+        file.close();
+    }
+    else cout << "Account gia' esistente, cambiare dati." << endl;
 
 }
 
@@ -159,21 +201,21 @@ void Finanza :: modificaAccount() {
 
                     ofstream file("Salvataggio_dati.txt");
 
-                    if (file.is_open()) {
-                        for (const auto& line : lines) {
-                            file << line << endl;
-                        }
-                        file.close();
-                        cout << " Modifica del file eseguita!" << endl;
+                    for (const auto& line : lines) {
+                        file << line << endl;
                     }
+                    file.close();
+
+                    controlloDatiNelFile(accountPre, accountPost);
                 }
-                else cout << "Errore nell'apertura del file." << endl;
+                else
+                    cout << "Errore nell'apertura del file." << endl;
                 break;
             }
         }
     }
-    else cout << "Account non trovato, controllare dati." << endl;
-    controlloEsistenza = true;
+    else
+        cout << "Account non trovato, controllare dati." << endl;
 }
 
 void Finanza :: eliminaAccount() {
@@ -310,7 +352,7 @@ void Finanza :: stampaDatiAccount() {
 
     for(int i = 0; i < accounts.size(); i++) {
         indice += i;
-        cout << indice << "' " << accounts[i].getNome() << " " << accounts[i].getCognome() << ", " << accounts[i].getEmail()
+        cout << indice << "-> " << accounts[i].getNome() << " " << accounts[i].getCognome() << ", " << accounts[i].getEmail()
              << ", " << accounts[i].getEta() << ", " << accounts[i].getNumeroTelefono() << ";" << endl;
     }
 
@@ -321,11 +363,11 @@ void Finanza :: stampaDatiCarte(Account account) {
 
     for(int i = 0; i < accounts.size(); i++) {
         indice += i;
-        cout << indice << "' " << accounts[i].getNome() << " " << accounts[i].getCognome() << ":" << endl;
+        cout << indice << "-> " << accounts[i].getNome() << " " << accounts[i].getCognome() << ":" << endl;
 
         for(int j = 0; j < account.getCarte().size(); j++) {
             indice += j;
-            cout << "  " << indice << "' " << account.getCarte()[j].getNumeroConto() << ", " << account.getCarte()[j].getIban()
+            cout << "  " << indice << "-> " << account.getCarte()[j].getNumeroConto() << ", " << account.getCarte()[j].getIban()
                  << ", " << account.getCarte()[j].getDataScadenza() << ", " << account.getCarte()[j].getSaldo() << ";" << endl;
         }
         indice = i + 1;
@@ -338,7 +380,7 @@ void Finanza :: stampaTransazioni(Account account, Carte carta) {
     for(int i = 0; i < accounts.size(); i++) {
         for(int j = 0; j < account.getCarte().size(); j++) {
             for(int k = 0; k < carta.getTransazioni().size(); k++) {
-                cout << "  " << indice << "' " << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
+                cout << "  " << indice << "-> " << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
                      << ", " << carta.getTransazioni()[k].getGiorno() << ";" << endl;
                 indice++;
             }
@@ -351,15 +393,15 @@ void Finanza :: stampaTransazioniAccount(Account account, Carte carta) {
 
     for(int i = 0; i < accounts.size(); i++) {
         indice += i;
-        cout << indice << "' " << accounts[i].getNome() << " " << accounts[i].getCognome() << ":" << endl;
+        cout << indice << "-> " << accounts[i].getNome() << " " << accounts[i].getCognome() << ":" << endl;
 
         for(int j = 0; j < account.getCarte().size(); j++) {
             indice += j;
-            cout << "  " << indice << "' " << account.getCarte()[j].getNumeroConto() << ", " << account.getCarte()[j].getIban() << ";" << endl;
+            cout << "  " << indice << "-> " << account.getCarte()[j].getNumeroConto() << ", " << account.getCarte()[j].getIban() << ";" << endl;
 
             for(int k = 0; k < carta.getTransazioni().size(); k++) {
                 indice += k;
-                cout << "  " << indice << "' " << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
+                cout << "  " << indice << "-> " << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
                      << ", " << carta.getTransazioni()[k].getGiorno() << ";" << endl;
             }
             indice = j + 1;
