@@ -21,7 +21,7 @@ void Finanza :: inserisciDatiAccount(string &nome, string &cognome, string &emai
     cin >> eta;
 }
 
-void Finanza ::controlloDatiNelFile(Account accountPre, Account accountPost) {
+void Finanza :: controlloDatiNelFile(Account accountPre, Account accountPost) {
     ifstream file("Salvataggio_dati.txt");
 
     if (file.is_open()) {
@@ -32,6 +32,31 @@ void Finanza ::controlloDatiNelFile(Account accountPre, Account accountPost) {
             if (line == "Conto di " + accountPre.getNome() + " " + accountPre.getCognome() + ":") {
                 line = "Conto di " + accountPost.getNome() + " " + accountPost.getCognome() + ":";
             }
+            lines.push_back(line);
+        }
+
+        ofstream file("Salvataggio_dati.txt");
+
+        for (const auto &line: lines) {
+            file << line << endl;
+        }
+        file.close();
+    }
+}
+
+void Finanza :: controlloDatiNelFileTrans(Account acPre, Account acPost) {
+    ifstream file("Salvataggio_dati.txt");
+
+    if (file.is_open()) {
+        vector<string> lines;
+        string line;
+
+        while (getline(file, line)) {
+            if (line == "Prelievo su carta di " + acPre.getNome() + " " + acPre.getCognome() + ":")
+                line = "Prelievo su carta di " + acPost.getNome() + " " + acPost.getCognome() + ":";
+
+            if(line == "Deposito su carta di " + acPre.getNome() + " " + acPre.getCognome() + ":")
+                line = "Deposito su carta di " + acPost.getNome() + " " + acPost.getCognome() + ":";
             lines.push_back(line);
         }
 
@@ -207,6 +232,7 @@ void Finanza :: modificaAccount() {
                     file.close();
 
                     controlloDatiNelFile(accountPre, accountPost);
+                    controlloDatiNelFileTrans(accountPre, accountPost);
                 }
                 else
                     cout << "Errore nell'apertura del file." << endl;
@@ -269,7 +295,7 @@ void Finanza :: eseguiOperazionePrelievo(Account account, Carte carta, Account a
         if(acc.getNumeroTelefono() == accounts[i].getNumeroTelefono()) {
 
             for(int j = 0; j < account.getCarte().size(); j++) {
-                if(carta.getIban() == account.getCarte()[j].getIban()) {
+                if(car.getIban() == account.getCarte()[j].getIban()) {
 
                     if(account.getCarte()[j].getSaldo() > transazione.getImporto()) {
                         carta.inserisciTransazione(transazione);
@@ -281,12 +307,12 @@ void Finanza :: eseguiOperazionePrelievo(Account account, Carte carta, Account a
 
                     if (file.is_open()) {
 
-                        string lineNameUser = "Prelievo su carta di " + account.getNome() + " " + account.getCognome() + ":";
+                        string lineNameUser = "Prelievo su carta di " + acc.getNome() + " " + acc.getCognome() + ":";
                         file << lineNameUser << endl;
 
-                        string lineCont = " Numero carta -> " + to_string(carta.getNumeroConto()) + ", Data scadenza -> " +
-                                          to_string(carta.getDataScadenza()) + ", Salario -> " + to_string(carta.getSaldo())
-                                          + ", Iban -> " + carta.getIban() + ";";
+                        string lineCont = " Numero carta -> " + to_string(car.getNumeroConto()) + ", Data scadenza -> " +
+                                          to_string(car.getDataScadenza()) + ", Salario -> " + to_string(car.getSaldo())
+                                          + ", Iban -> " + car.getIban() + ";";
                         file << lineCont << endl;
 
                         string lineTrans = " Data -> " + to_string(transazione.getData()) + ", Giorno -> " + transazione.getGiorno()
@@ -300,7 +326,6 @@ void Finanza :: eseguiOperazionePrelievo(Account account, Carte carta, Account a
                     file.close();
                 }
             }
-
         }
     }
 

@@ -17,6 +17,8 @@ public:
 
     void controlloDatiNelFile(Account acPre, Account acPost);
 
+    void controlloDatiNelFileTrans(Account acPre, Account acPost);
+
     void stampaMenuAccount();
 
     void stampaMenuVisualizzazioni(Account account, Carte carte);
