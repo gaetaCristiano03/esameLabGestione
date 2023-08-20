@@ -71,6 +71,54 @@ void Finanza :: controlloDatiNelFileTrans(Account acPre, Account acPost) {
     }
 }
 
+void Finanza :: eliminaDatiFileTransazione(Account account, Carte carta, Transazione transazione) {
+    ifstream file("Salvataggio_dati.txt");
+
+    if (file.is_open()) {
+        vector<string> lines;
+        string lineT, lineC, lineA;
+
+        while (getline(file, lineT)) {
+            if (lineT != " Data -> " + to_string(transazione.getData()) + ", Giorno -> " + transazione.getGiorno()
+                         + ", Importo -> " + to_string(transazione.getImporto()) + ";") {
+                lines.push_back(lineT);
+            }
+        }
+
+        while (getline(file, lineC)) {
+            if (lineC != " Numero carta -> " + to_string(carta.getNumeroConto()) + ", Data scadenza -> " +
+                         to_string(carta.getDataScadenza()) + ", Salario -> " + to_string(carta.getSaldo())
+                         + ", Iban -> " + carta.getIban() + ";") {
+                lines.push_back(lineC);
+            }
+        }
+
+        while (getline(file, lineA)) {
+            if(transazione.getBool() == true) {
+                if (lineA != "Prelievo su carta di " + account.getNome() + " " + account.getCognome() + ":")
+                    lines.push_back(lineA);
+            }
+            else {
+                if (lineA != "Deposito su carta di " + account.getNome() + " " + account.getCognome() + ":")
+                    lines.push_back(lineA);
+            }
+        }
+
+        file.close();
+
+        ofstream file("Salvataggio_dati.txt");
+
+        if (file.is_open()) {
+            for (const auto& line : lines) {
+                file << line << endl;
+            }
+
+            file.close();
+            cout << "Le righe sono state eliminate dal file." << endl;
+        }
+    }
+}
+
 void Finanza :: stampaMenuAccount() {
     int scelta;
 
@@ -348,6 +396,87 @@ void Finanza :: eseguiOperazione(Account &account, Carte &carta, Account acc, Ca
         }
     }
 
+}
+
+void Finanza :: modificaOperazione(Account &account, Carte &carta, unsigned long int numTel, string iban, bool condizione) {
+
+    for(int i = 0; i < accounts.size(); i++) {
+        if(accounts[i].getNumeroTelefono() == numTel) {
+
+            for(int j = 0; j < account.getCarte().size(); j++) {
+                if(account.getCarte()[j].getIban() == iban) {
+
+                    for(int k = 0; k < carta.getTransazioni().size(); k++) {
+                        if(carta.getTransazioni()[k].getBool() == condizione) {
+
+                            carta.inserisciDatiTransazione(date, importo, giorno);
+                            Transazione transazionePost(date, importo, giorno, condizione);
+                            Transazione transazionePre(carta.getTransazioni()[k].getData(), carta.getTransazioni()[k].getImporto(),
+                                                       carta.getTransazioni()[k].getGiorno(), condizione);
+                            carta.sostituisciTransazione(k, transazionePost);
+                            cout << "Modifica effettuata!" << endl;
+
+                            ifstream file("Salvataggio_dati.txt");
+
+                            if (file.is_open()) {
+                                vector<string> lines;
+                                string line;
+
+                                while (getline(file, line)) {
+                                    if (line == " Data -> " + to_string(transazionePre.getData()) + ", Giorno -> " + transazionePre.getGiorno()
+                                                + ", Importo -> " + to_string(transazionePre.getImporto()) + ";") {
+
+                                        line = " Data -> " + to_string(transazionePost.getData()) + ", Giorno -> " + transazionePost.getGiorno()
+                                               + ", Importo -> " + to_string(transazionePost.getImporto()) + ";";
+                                    }
+                                    lines.push_back(line);
+                                }
+
+                                ofstream file("Salvataggio_dati.txt");
+
+                                for (const auto& line : lines) {
+                                    file << line << endl;
+                                }
+                                file.close();
+                            }
+                            break;
+                        }
+                    }
+
+                }
+            }
+
+        }
+    }
+}
+
+void Finanza :: eliminaOperazione(Account &account, Carte &carta, Account acc, Carte car, Transazione transazione) {
+    bool controlloAccount = cercaAccount(acc);
+    bool controlloCarta = account.cercaCarta(car);
+    bool controlloTransazione = carta.cercaTransazione(transazione);
+
+    if(controlloAccount == true && controlloCarta == true && controlloTransazione == true) {
+        for(int i = 0; i < accounts.size(); i++) {
+            if(accounts[i].getNumeroTelefono() == acc.getNumeroTelefono()) {
+
+                for(int j = 0; j < account.getCarte().size(); j++) {
+                    if(account.getCarte()[j].getIban() == car.getIban()) {
+
+                        for(int k = 0; k < carta.getTransazioni().size(); k++) {
+                            if(carta.getTransazioni()[k].getGiorno() == transazione.getGiorno()) {
+
+                                carta.eliminaTransazione(k);
+                                eliminaDatiFileTransazione(acc, car, transazione);
+
+                            }
+                        }
+
+                    }
+                }
+
+            }
+        }
+    }
 }
 
 void Finanza :: stampaDatiAccount() {

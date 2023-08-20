@@ -1,5 +1,4 @@
 #include <iostream>
-#include <windows.h>
 #include "Finanza.h"
 #include "Account.h"
 #include "Carte.h"
@@ -13,8 +12,8 @@ int stampaMenu();
 void stampaMenuCarte(Finanza finanza, Account &account);
 void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta);
 
-int sl = 20, numeroCon, dataScad, sal;
-string no, cog, em, ib;
+int numeroCon, dataScad, sal, dat, impor, condizionePrelDep;
+string no, cog, em, ib, gi;
 unsigned long int numeroTel, et;
 
 int main() {
@@ -86,28 +85,28 @@ Carte controlloEsistenzaCarte(Account account) {
 int stampaMenu() {
     int scelta;
 
-    cout << " _____           _   _                           " << endl; Sleep(sl);
-    cout << "|  __ \\         | | (_)                         " << endl; Sleep(sl);
-    cout << "| |  \\/ ___  ___| |_ _  ___  _ __   ___         " << endl; Sleep(sl);
-    cout << "| | __ / _ \\/ __| __| |/ _ \\| '_ \\ / _ \\     " << endl; Sleep(sl);
-    cout << "| |_\\ \\  __/\\__ \\ |_| | (_) | | | |  __/     " << endl; Sleep(sl);
-    cout << "\\____/\\___||___/\\__|_|\\___/|_| |_|\\___|     " << endl; Sleep(sl);
+    cout << " _____           _   _                           " << endl;
+    cout << "|  __ \\         | | (_)                         " << endl;
+    cout << "| |  \\/ ___  ___| |_ _  ___  _ __   ___         " << endl;
+    cout << "| | __ / _ \\/ __| __| |/ _ \\| '_ \\ / _ \\     " << endl;
+    cout << "| |_\\ \\  __/\\__ \\ |_| | (_) | | | |  __/     " << endl;
+    cout << "\\____/\\___||___/\\__|_|\\___/|_| |_|\\___|     " << endl;
 
-    cout << " __ _                       _            _                  " << endl; Sleep(sl);
-    cout << "/ _(_)                     (_)          (_)         _       " << endl; Sleep(sl);
-    cout << "| |_ _ _ __   __ _ _ __  _____  __ _ _ __ _  __ _  (_)      " << endl; Sleep(sl);
-    cout << "|  _| | '_ \\ / _` | '_ \\|_  / |/ _` | '__| |/ _` |        " << endl; Sleep(sl);
-    cout << "| | | | | | | (_| | | | |/ /| | (_| | |  | | (_| |  _       " << endl; Sleep(sl);
-    cout << "|_| |_|_| |_|\\__,_|_| |_/___|_|\\__,_|_|  |_|\\__,_| (_)   " << endl; Sleep(sl);
+    cout << " __ _                       _            _                  " << endl;
+    cout << "/ _(_)                     (_)          (_)         _       " << endl;
+    cout << "| |_ _ _ __   __ _ _ __  _____  __ _ _ __ _  __ _  (_)      " << endl;
+    cout << "|  _| | '_ \\ / _` | '_ \\|_  / |/ _` | '__| |/ _` |        " << endl;
+    cout << "| | | | | | | (_| | | | |/ /| | (_| | |  | | (_| |  _       " << endl;
+    cout << "|_| |_|_| |_|\\__,_|_| |_/___|_|\\__,_|_|  |_|\\__,_| (_)   " << endl;
 
-    cout << "0. Esci dal programma;"   << endl; Sleep(sl);
-    cout << "1. Gestione utenti;"      << endl; Sleep(sl);
-    cout << "2. Gestione conti/carte;" << endl; Sleep(sl);
-    cout << "3. Gestione transazioni;"   << endl; Sleep(sl);
-    cout << "4. Visualizzazione dati;" << endl; Sleep(sl);
-    cout << "5. Ripristina file."      << endl; Sleep(sl);
+    cout << "0. Esci dal programma;"   << endl;
+    cout << "1. Gestione utenti;"      << endl;
+    cout << "2. Gestione conti/carte;" << endl;
+    cout << "3. Gestione transazioni;"   << endl;
+    cout << "4. Visualizzazione dati;" << endl;
+    cout << "5. Ripristina file."      << endl;
 
-    cout << "Inserisci la tua scelta ->  "; Sleep(sl);
+    cout << "Inserisci la tua scelta ->  ";
     cin >> scelta;
     cout << endl;
 
@@ -165,24 +164,63 @@ void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta) {
     cin >> scelta;
     cout << endl;
 
-    switch(scelta) {
-        case 1:
-            cout << "Inserisci alcuni dati dell'utente per trovarlo:" << endl;
-            Account acc = controlloEsistenzaAccount(finanza);
-            cout << endl << "Ora inserisci i dati della carta: " << endl;
-            Carte car = controlloEsistenzaCarte(account);
-
-            int sceltaOperazione;
-            cout << endl << "Perfetto! Ora scegli la tua operazione:" << endl;
-            cout << "1. Operazione prelievo;" << endl;
-            cout << "2. Operazione deposito." << endl;
-            cin >> sceltaOperazione;
-
-            finanza.eseguiOperazione(account, carta, acc, car, sceltaOperazione);
-        break;
-
-        case 2:
-
-
+    while (scelta < 1 || scelta > 3) {
+        cout << "Inserimento I/O errato, riprovare." << endl;
+        cout << "Scegli una opzione -> ";
+        cin >> scelta;
     }
+    cout << endl;
+
+    if(scelta == 1) {
+        cout << "INSERIMENTO TRANSAZIONI PRELIEVO/DEPOSITO:" << endl;
+        cout << "Inserisci alcuni dati dell'utente per trovarlo:" << endl;
+        Account acc = controlloEsistenzaAccount(finanza);
+        cout << endl << "Ora inserisci i dati della carta: " << endl;
+        Carte car = controlloEsistenzaCarte(account);
+
+        int sceltaOperazione;
+        cout << endl << "Perfetto! Ora scegli la tua operazione:" << endl;
+        cout << "1. Operazione prelievo;" << endl;
+        cout << "2. Operazione deposito." << endl;
+        cin >> sceltaOperazione;
+
+        finanza.eseguiOperazione(account, carta, acc, car, sceltaOperazione);
+    }
+
+    else if(scelta  == 2) {
+        cout << "MODIFICA TRANSAZIONI PRELIEVO/DEPOSITO:" << endl;
+        cout << "Inserisci alcuni dati per trovare la transazione:" << endl;
+        cout << "1. Numero di telefono dell'utente -> ";
+        cin >> numeroTel;
+        cout << "2. Codice iban della carta -> ";
+        cin >> ib;
+        cout << "3. Era un prelievo(0) o un deposito(1)?";
+        cin >> condizionePrelDep;
+
+        if(condizionePrelDep == 0)
+            finanza.modificaOperazione(account, carta, numeroTel, ib, true);
+        else
+            finanza.modificaOperazione(account, carta, numeroTel, ib, false);
+    }
+
+    else {
+        Transazione tran;
+        cout << "ELIMINAZIONE TRANSAZIONI PRELIEVO/DEPOSITO:" << endl;
+        cout << "Inserisci alcuni dati dell'utente per trovarlo:" << endl;
+        Account acc = controlloEsistenzaAccount(finanza);
+        cout << endl << "Ora inserisci i dati della carta: " << endl;
+        Carte car = controlloEsistenzaCarte(account);
+        cout << endl << "Ora inserisci i dati della transazione: " << endl;
+        carta.inserisciDatiTransazione(dat, impor, gi);
+        cout << "4. Era un prelievo(0) o un deposito(1)?";
+        cin >> condizionePrelDep;
+
+        if(condizionePrelDep == 0)
+            tran = Transazione(dat, impor, gi, true);
+        else
+            tran = Transazione(dat, impor, gi, false);
+
+        finanza.eliminaOperazione(account, carta, acc, car, tran);
+    }
+
 }

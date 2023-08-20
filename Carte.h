@@ -20,7 +20,13 @@ public:
 
     void inserisciDatiTransazione(int &date, int &importo, string &giorno);
 
+    bool cercaTransazione(Transazione transazione);
+
     void inserisciTransazione(Transazione transazione);
+
+    void sostituisciTransazione(int indice, Transazione transazione);
+
+    void eliminaTransazione(int indice);
 
     //Getter & Setter:
     int getNumeroConto() const {

@@ -19,6 +19,8 @@ public:
 
     void controlloDatiNelFileTrans(Account acPre, Account acPost);
 
+    void eliminaDatiFileTransazione(Account account, Carte carta, Transazione transazione);
+
     void stampaMenuAccount();
 
     void stampaMenuVisualizzazioni(Account account, Carte carte);
@@ -32,6 +34,10 @@ public:
     void eliminaAccount();
 
     void eseguiOperazione(Account &account, Carte &carta, Account acc, Carte car, int scelta);
+
+    void modificaOperazione(Account &account, Carte &carta, unsigned long int numTel, string iban, bool condizione);
+
+    void eliminaOperazione(Account &account, Carte &carta, Account acc, Carte car, Transazione transazione);
 
     void stampaDatiAccount();
 
