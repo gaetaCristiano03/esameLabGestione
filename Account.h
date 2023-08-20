@@ -31,8 +31,6 @@ public:
 
     void eliminaCarta(Account account);
 
-    void setSaldo(int scelta, int indice, int importo);
-
     void cambiaSalario(int indice, const Carte carta);
 
     //Getter and Setter

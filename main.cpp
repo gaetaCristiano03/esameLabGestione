@@ -12,8 +12,8 @@ int stampaMenu();
 void stampaMenuCarte(Finanza finanza, Account &account);
 void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta);
 
-int numeroCon, dataScad, sal, dat, impor, condizionePrelDep;
-string no, cog, em, ib, gi;
+int numeroCon, dataScad, sal, dat, impor, condizionePrelDep, cod;
+string no, cog, em, ib, gi, cau;
 unsigned long int numeroTel, et;
 
 int main() {
@@ -211,14 +211,14 @@ void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta) {
         cout << endl << "Ora inserisci i dati della carta: " << endl;
         Carte car = controlloEsistenzaCarte(account);
         cout << endl << "Ora inserisci i dati della transazione: " << endl;
-        carta.inserisciDatiTransazione(dat, impor, gi);
+        carta.inserisciDatiTransazione(dat, impor, cod, gi, cau);
         cout << "4. Era un prelievo(0) o un deposito(1)?";
         cin >> condizionePrelDep;
 
         if(condizionePrelDep == 0)
-            tran = Transazione(dat, impor, gi, true);
+            tran = Transazione(dat, impor, gi, true, cod, cau);
         else
-            tran = Transazione(dat, impor, gi, false);
+            tran = Transazione(dat, impor, gi, false, cod, cau);
 
         finanza.eliminaOperazione(account, carta, acc, car, tran);
     }

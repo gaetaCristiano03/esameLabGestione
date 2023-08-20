@@ -14,7 +14,7 @@ bool Carte :: cercaTransazione(Transazione transazione) {
         if(transazioni[i].getGiorno() == transazione.getGiorno()) {
             if(transazioni[i].getData() == transazione.getData()) {
                 if(transazioni[i].getImporto() == transazione.getImporto()) {
-                    if(transazioni[i].getBool() == transazione.getBool())
+                    if(transazioni[i].getCodice() == transazione.getCodice())
                         return true;
                 }
             }
@@ -23,13 +23,17 @@ bool Carte :: cercaTransazione(Transazione transazione) {
     return false;
 }
 
-void Carte :: inserisciDatiTransazione(int &date, int &importo, string &giorno) {
+void Carte :: inserisciDatiTransazione(int &date, int &importo, int& codice, string &giorno, string& causale) {
     cout << " 1. Data transazione -> ";
     cin >> date;
     cout << "2. Giorno -> ";
     cin >> giorno;
     cout << "3. Importo -> ";
     cin >> importo;
+    cout << "4. Causale -> ";
+    cin >> causale;
+    cout << "5. Codice -> ";
+    cin >> codice;
 }
 
 void Carte :: inserisciTransazione(Transazione transazione) {

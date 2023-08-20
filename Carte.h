@@ -18,7 +18,7 @@ public:
 
     Carte(const int &numeroConto, const int &dataScadenza, const int &saldo, const string &iban);
 
-    void inserisciDatiTransazione(int &date, int &importo, string &giorno);
+    void inserisciDatiTransazione(int &date, int &importo, int& codice, string &giorno, string& causale);
 
     bool cercaTransazione(Transazione transazione);
 

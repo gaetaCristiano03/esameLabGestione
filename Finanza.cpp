@@ -1,9 +1,9 @@
 #include <iostream>
 #include "Finanza.h"
 
-string nome, cognome, email, giorno, ib;
+string nome, cognome, email, giorno, iba, caus;
 unsigned long int numeroTelefono, eta;
-int date, importo;
+int date, importo, codic;
 bool controlloEsistenza;
 
 Finanza :: Finanza() {};
@@ -341,15 +341,15 @@ void Finanza :: eliminaAccount() {
 }
 
 void Finanza :: eseguiOperazione(Account &account, Carte &carta, Account acc, Carte car, int scelta) {
-    carta.inserisciDatiTransazione(date, importo, giorno);
+    carta.inserisciDatiTransazione(date, importo, codic, giorno, caus);
     Transazione transazione;
     string lineNameUser;
     int num;
 
     if(scelta == 1)
-        transazione = Transazione(date, importo, giorno, true);   //PRELIEVO
+        transazione = Transazione(date, importo, giorno, true, codic, caus);   //PRELIEVO
     else
-        transazione = Transazione(date, importo, giorno, false); //DEPOSITO
+        transazione = Transazione(date, importo, giorno, false, codic, caus); //DEPOSITO
 
     for(int i = 0; i < accounts.size(); i++) {
         if(accounts[i].getNumeroTelefono() == acc.getNumeroTelefono()) {
@@ -413,10 +413,10 @@ void Finanza :: modificaOperazione(Account &account, Carte &carta, unsigned long
                     for(int k = 0; k < carta.getTransazioni().size(); k++) {
                         if(carta.getTransazioni()[k].getBool() == condizione) {
 
-                            carta.inserisciDatiTransazione(date, importo, giorno);
-                            Transazione transazionePost(date, importo, giorno, condizione);
+                            carta.inserisciDatiTransazione(date, importo, codic, giorno, caus);
+                            Transazione transazionePost(date, importo, giorno, condizione, codic, caus);
                             Transazione transazionePre(carta.getTransazioni()[k].getData(), carta.getTransazioni()[k].getImporto(),
-                                                       carta.getTransazioni()[k].getGiorno(), condizione);
+                                                       carta.getTransazioni()[k].getGiorno(), condizione, codic, caus);
                             carta.sostituisciTransazione(k, transazionePost);
                             cout << "Modifica effettuata!" << endl;
 
@@ -580,11 +580,11 @@ void Finanza :: stampaRicercaAvanzata(Account account, Carte carta) {
 
     else if(scelta == 2) {
         cout << "Inserisci un iban -> ";
-        cin >> ib;
+        cin >> iba;
 
         for(int i = 0; i < accounts.size(); i++) {
             for(int j = 0; j < account.getCarte().size(); j++) {
-                if(account.getCarte()[j].getIban() == ib) {
+                if(account.getCarte()[j].getIban() == iba) {
                     indice += j;
                     cout << "  " << indice << "-> [" << account.getCarte()[j].getNumeroConto() << ", "
                          << account.getCarte()[j].getIban()
