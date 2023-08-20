@@ -31,9 +31,7 @@ public:
 
     void eliminaAccount();
 
-    void eseguiOperazionePrelievo(Account &account, Carte &carta, Account acc, Carte car);
-
-    void eseguiOperazioneDeposito(Account &account, Carte &carta, Account acc, Carte car);
+    void eseguiOperazione(Account &account, Carte &carta, Account acc, Carte car, int scelta);
 
     void stampaDatiAccount();
 

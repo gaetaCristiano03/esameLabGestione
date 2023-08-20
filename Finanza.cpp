@@ -288,9 +288,16 @@ void Finanza :: eliminaAccount() {
     }
 }
 
-void Finanza :: eseguiOperazionePrelievo(Account &account, Carte &carta, Account acc, Carte car) {
+void Finanza :: eseguiOperazione(Account &account, Carte &carta, Account acc, Carte car, int scelta) {
     carta.inserisciDatiTransazione(date, importo, giorno);
-    Transazione transazione(date, importo, giorno);
+    Transazione transazione;
+    string lineNameUser;
+    int num;
+
+    if(scelta == 1)
+        transazione = Transazione(date, importo, giorno, true);   //PRELIEVO
+    else
+        transazione = Transazione(date, importo, giorno, false); //DEPOSITO
 
     for(int i = 0; i < accounts.size(); i++) {
         if(accounts[i].getNumeroTelefono() == acc.getNumeroTelefono()) {
@@ -298,20 +305,29 @@ void Finanza :: eseguiOperazionePrelievo(Account &account, Carte &carta, Account
             for(int j = 0; j < account.getCarte().size(); j++) {
                 if(account.getCarte()[j].getIban() == car.getIban()) {
 
-                    if(account.getCarte()[j].getSaldo() > transazione.getImporto()) {
-                        carta.inserisciTransazione(transazione);
-                        int num = account.getCarte()[j].getSaldo() - transazione.getImporto();
+                    if(transazione.getBool() == true) {
+                        if (account.getCarte()[j].getSaldo() > transazione.getImporto()) {
+                            carta.inserisciTransazione(transazione);
+                            num = account.getCarte()[j].getSaldo() - transazione.getImporto();
+                            car.setSaldo(num);
+                            account.cambiaSalario(j, car);
+
+                        } else cout << "Errore nell'operazione, credito insuffiente." << endl;
+                    }
+                    else {
+                        num = account.getCarte()[j].getSaldo() + transazione.getImporto();
                         car.setSaldo(num);
                         account.cambiaSalario(j, car);
-
                     }
-                    else cout << "Errore nell'operazione." << endl;
 
                     ofstream file("Salvataggio_dati.txt", ios::app);
 
                     if (file.is_open()) {
+                        if(transazione.getBool() == true)
+                            lineNameUser = "Prelievo su carta di " + acc.getNome() + " " + acc.getCognome() + ":";
+                        else
+                            lineNameUser = "Deposito su carta di " + account.getNome() + " " + account.getCognome() + ":";
 
-                        string lineNameUser = "Prelievo su carta di " + acc.getNome() + " " + acc.getCognome() + ":";
                         file << lineNameUser << endl;
 
                         string lineCont = " Numero carta -> " + to_string(car.getNumeroConto()) + ", Data scadenza -> " +
@@ -332,47 +348,6 @@ void Finanza :: eseguiOperazionePrelievo(Account &account, Carte &carta, Account
         }
     }
 
-}
-
-void Finanza :: eseguiOperazioneDeposito(Account &account, Carte &carta, Account acc, Carte car) {
-    carta.inserisciDatiTransazione(date, importo, giorno);
-    Transazione transazione(date, importo, giorno);
-
-    for(int i = 0; i < accounts.size(); i++) {
-        if (acc.getNumeroTelefono() == accounts[i].getNumeroTelefono()) {
-
-            for (int j = 0; j < account.getCarte().size(); j++) {
-                if (carta.getIban() == account.getCarte()[j].getIban()) {
-                    carta.inserisciTransazione(transazione);
-                    int num = account.getCarte()[j].getSaldo() + transazione.getImporto();
-                    car.setSaldo(num);
-                    account.cambiaSalario(j, car);
-
-                    ofstream file("Salvataggio_dati.txt", ios::app);
-
-                    if (file.is_open()) {
-
-                        string lineNameUser = "Deposito su carta di " + account.getNome() + " " + account.getCognome() + ":";
-                        file << lineNameUser << endl;
-
-                        string lineCont = " Numero carta -> " + to_string(carta.getNumeroConto()) + ", Data scadenza -> " +
-                                          to_string(carta.getDataScadenza()) + ", Salario -> " + to_string(carta.getSaldo())
-                                          + ", Iban -> " + carta.getIban() + ";";
-                        file << lineCont << endl;
-
-                        string lineTrans = " Data -> " + to_string(transazione.getData()) +  ", Giorno -> " + transazione.getGiorno()
-                                           + ", Importo -> " + to_string(transazione.getImporto()) + ";";
-                        file << lineTrans << endl << endl;
-
-                        cout << "Transazione completata!" << endl;
-                    }
-
-                    file.close();
-                }
-            }
-
-        }
-    }
 }
 
 void Finanza :: stampaDatiAccount() {

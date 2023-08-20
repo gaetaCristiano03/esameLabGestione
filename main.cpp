@@ -168,8 +168,5 @@ void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta) {
     cout << "2. Operazione deposito." << endl;
     cin >> scelta;
 
-    if(scelta == 1)
-        finanza.eseguiOperazionePrelievo(account, carta, acc, car);
-    else
-        finanza.eseguiOperazioneDeposito(account, carta, acc, car);
+    finanza.eseguiOperazione(account, carta, acc, car, scelta);
 }
