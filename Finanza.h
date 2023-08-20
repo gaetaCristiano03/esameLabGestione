@@ -47,6 +47,8 @@ public:
 
     void stampaTransazioniAccount(Account account, Carte carta);
 
+    void stampaRicercaAvanzata(Account account, Carte carta);
+
 };
 
 #endif //ESAMELABGESTIONE_FINANZA_H

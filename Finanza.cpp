@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Finanza.h"
 
-string nome, cognome, email, giorno;
+string nome, cognome, email, giorno, ib;
 unsigned long int numeroTelefono, eta;
 int date, importo;
 bool controlloEsistenza;
@@ -159,13 +159,14 @@ void Finanza :: stampaMenuVisualizzazioni(Account account, Carte carta) {
     cout << "1. Dati di tutti gli utenti;" << endl;
     cout << "2. Carte di ogni utente;" << endl;
     cout << "3. Tutte le transazioni;" << endl;
-    cout << "4. Transazione di ogni utente." << endl;
+    cout << "4. Transazione di ogni utente;" << endl;
+    cout << "5. Ricerca avanzata." << endl;
 
     cout << "Scegli una delle seguenti opzioni -> ";
     cin >> scelta;
     cout << endl;
 
-    while (scelta < 1 || scelta > 4) {
+    while (scelta < 1 || scelta > 5) {
         cout << "Inserimento I/O errato, riprovare." << endl;
         cout << "Scegli una opzione -> ";
         cin >> scelta;
@@ -184,6 +185,9 @@ void Finanza :: stampaMenuVisualizzazioni(Account account, Carte carta) {
             break;
         case 4:
             stampaTransazioniAccount(account, carta);
+            break;
+        case 5:
+            stampaRicercaAvanzata(account, carta);
             break;
     }
 
@@ -542,5 +546,69 @@ void Finanza :: stampaTransazioniAccount(Account account, Carte carta) {
             indice = j + 1;
         }
         indice = i + 1;
+    }
+}
+
+void Finanza :: stampaRicercaAvanzata(Account account, Carte carta) {
+    int scelta, indice;
+    cout << "In quale categoria vuoi cercare?" << endl;
+    cout << " 1. Account;" << endl;
+    cout << " 2. Carte;" << endl;
+    cout << " 3. Transazioni." << endl;
+    cin >> scelta;
+
+    while (scelta < 1 || scelta > 3) {
+        cout << "Inserimento I/O errato, riprovare." << endl;
+        cout << "Scegli una opzione -> ";
+        cin >> scelta;
+    }
+    cout << endl;
+
+    if(scelta == 1) {
+        cout << "Inserisci un nome -> ";
+        cin >> nome;
+
+        for(int i = 0; i < accounts.size(); i++) {
+            if(accounts[i].getNome() == nome) {
+                indice += i;
+                cout << indice << "-> [" << accounts[i].getNome() << " " << accounts[i].getCognome() << ", "
+                     << accounts[i].getEmail() << ", " << accounts[i].getEta() << ", " << accounts[i].getNumeroTelefono()
+                     << "];" << endl;
+            }
+        }
+    }
+
+    else if(scelta == 2) {
+        cout << "Inserisci un iban -> ";
+        cin >> ib;
+
+        for(int i = 0; i < accounts.size(); i++) {
+            for(int j = 0; j < account.getCarte().size(); j++) {
+                if(account.getCarte()[j].getIban() == ib) {
+                    indice += j;
+                    cout << "  " << indice << "-> [" << account.getCarte()[j].getNumeroConto() << ", "
+                         << account.getCarte()[j].getIban()
+                         << ", " << account.getCarte()[j].getDataScadenza() << ", " << account.getCarte()[j].getSaldo()
+                         << "];" << endl;
+                }
+            }
+        }
+    }
+
+    else if(scelta == 3) {
+        cout << "Inserisci un giorno -> ";
+        cin >> giorno;
+
+        for(int i = 0; i < accounts.size(); i++) {
+            for(int j = 0; j < account.getCarte().size(); j++) {
+                for(int k = 0; k < carta.getTransazioni().size(); k++) {
+                    if(carta.getTransazioni()[k].getGiorno() == giorno) {
+                        indice += k;
+                        cout << "  " << indice << "-> [" << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
+                             << ", " << carta.getTransazioni()[k].getGiorno() << "];" << endl;
+                    }
+                }
+            }
+        }
     }
 }
