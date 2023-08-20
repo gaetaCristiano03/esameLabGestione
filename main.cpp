@@ -103,7 +103,7 @@ int stampaMenu() {
     cout << "0. Esci dal programma;"   << endl; Sleep(sl);
     cout << "1. Gestione utenti;"      << endl; Sleep(sl);
     cout << "2. Gestione conti/carte;" << endl; Sleep(sl);
-    cout << "3. Esegui transazioni;"   << endl; Sleep(sl);
+    cout << "3. Gestione transazioni;"   << endl; Sleep(sl);
     cout << "4. Visualizzazione dati;" << endl; Sleep(sl);
     cout << "5. Ripristina file."      << endl; Sleep(sl);
 
@@ -155,18 +155,34 @@ void stampaMenuCarte(Finanza finanza, Account &account) {
 }
 
 void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta) {
-    cout << "TRANSAZIONI PRELIEVO / DEPOSITO:" << endl;
-    cout << "Inserisci alcuni dati dell'utente per trovarlo:" << endl;
-    Account acc = controlloEsistenzaAccount(finanza);
-
-    cout << endl << "Ora inserisci i dati della carta: " << endl;
-    Carte car = controlloEsistenzaCarte(account);
-
     int scelta;
-    cout << endl << "Perfetto! Ora scegli la tua operazione:" << endl;
-    cout << "1. Operazione prelievo;" << endl;
-    cout << "2. Operazione deposito." << endl;
-    cin >> scelta;
+    cout << "GESTIONE TRANSAZIONI PRELIEVO/DEPOSITO:" << endl;
+    cout << " 1. Inserisci nuova transazioni;" << endl;
+    cout << " 2. Modifica transazione;" << endl;
+    cout << " 3. Elimina transazione;" << endl;
 
-    finanza.eseguiOperazione(account, carta, acc, car, scelta);
+    cout << "Scegli una delle seguenti opzioni -> ";
+    cin >> scelta;
+    cout << endl;
+
+    switch(scelta) {
+        case 1:
+            cout << "Inserisci alcuni dati dell'utente per trovarlo:" << endl;
+            Account acc = controlloEsistenzaAccount(finanza);
+            cout << endl << "Ora inserisci i dati della carta: " << endl;
+            Carte car = controlloEsistenzaCarte(account);
+
+            int sceltaOperazione;
+            cout << endl << "Perfetto! Ora scegli la tua operazione:" << endl;
+            cout << "1. Operazione prelievo;" << endl;
+            cout << "2. Operazione deposito." << endl;
+            cin >> sceltaOperazione;
+
+            finanza.eseguiOperazione(account, carta, acc, car, sceltaOperazione);
+        break;
+
+        case 2:
+
+
+    }
 }
