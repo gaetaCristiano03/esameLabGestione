@@ -2,7 +2,8 @@
 #include "Finanza.h"
 
 string nome, cognome, email, giorno;
-unsigned long int numeroTelefono, eta, date, importo;
+unsigned long int numeroTelefono, eta;
+int date, importo;
 bool controlloEsistenza;
 
 Finanza :: Finanza() {};
@@ -287,19 +288,22 @@ void Finanza :: eliminaAccount() {
     }
 }
 
-void Finanza :: eseguiOperazionePrelievo(Account account, Carte carta, Account acc, Carte car) {
+void Finanza :: eseguiOperazionePrelievo(Account &account, Carte &carta, Account acc, Carte car) {
     carta.inserisciDatiTransazione(date, importo, giorno);
     Transazione transazione(date, importo, giorno);
 
     for(int i = 0; i < accounts.size(); i++) {
-        if(acc.getNumeroTelefono() == accounts[i].getNumeroTelefono()) {
+        if(accounts[i].getNumeroTelefono() == acc.getNumeroTelefono()) {
 
             for(int j = 0; j < account.getCarte().size(); j++) {
-                if(car.getIban() == account.getCarte()[j].getIban()) {
+                if(account.getCarte()[j].getIban() == car.getIban()) {
 
                     if(account.getCarte()[j].getSaldo() > transazione.getImporto()) {
                         carta.inserisciTransazione(transazione);
-                        account.setSaldo(1, j, transazione.getImporto());
+                        int num = account.getCarte()[j].getSaldo() - transazione.getImporto();
+                        car.setSaldo(num);
+                        account.cambiaSalario(j, car);
+
                     }
                     else cout << "Errore nell'operazione." << endl;
 
@@ -321,7 +325,6 @@ void Finanza :: eseguiOperazionePrelievo(Account account, Carte carta, Account a
 
                         cout << "Transazione completata!" << endl;
                     }
-                    else cout << "Impossibile aprire il file." << endl;
 
                     file.close();
                 }
@@ -331,7 +334,7 @@ void Finanza :: eseguiOperazionePrelievo(Account account, Carte carta, Account a
 
 }
 
-void Finanza :: eseguiOperazioneDeposito(Account account, Carte carta, Account acc, Carte car) {
+void Finanza :: eseguiOperazioneDeposito(Account &account, Carte &carta, Account acc, Carte car) {
     carta.inserisciDatiTransazione(date, importo, giorno);
     Transazione transazione(date, importo, giorno);
 
@@ -341,7 +344,9 @@ void Finanza :: eseguiOperazioneDeposito(Account account, Carte carta, Account a
             for (int j = 0; j < account.getCarte().size(); j++) {
                 if (carta.getIban() == account.getCarte()[j].getIban()) {
                     carta.inserisciTransazione(transazione);
-                    account.setSaldo(2, j, transazione.getImporto());
+                    int num = account.getCarte()[j].getSaldo() + transazione.getImporto();
+                    car.setSaldo(num);
+                    account.cambiaSalario(j, car);
 
                     ofstream file("Salvataggio_dati.txt", ios::app);
 
@@ -361,7 +366,6 @@ void Finanza :: eseguiOperazioneDeposito(Account account, Carte carta, Account a
 
                         cout << "Transazione completata!" << endl;
                     }
-                    else cout << "Impossibile aprire il file." << endl;
 
                     file.close();
                 }
@@ -377,23 +381,24 @@ void Finanza :: stampaDatiAccount() {
 
     for(int i = 0; i < accounts.size(); i++) {
         indice += i;
-        cout << indice << "-> " << accounts[i].getNome() << " " << accounts[i].getCognome() << ", " << accounts[i].getEmail()
-             << ", " << accounts[i].getEta() << ", " << accounts[i].getNumeroTelefono() << ";" << endl;
+        cout << indice << "-> [" << accounts[i].getNome() << " " << accounts[i].getCognome() << ", " << accounts[i].getEmail()
+             << ", " << accounts[i].getEta() << ", " << accounts[i].getNumeroTelefono() << "];" << endl;
     }
 
 }
 
 void Finanza :: stampaDatiCarte(Account account) {
     int indice = 1;
+    cout << "STAMPA DATI DELLE CARTE PER OGNI UTENTE:" << endl;
 
     for(int i = 0; i < accounts.size(); i++) {
         indice += i;
-        cout << indice << "-> " << accounts[i].getNome() << " " << accounts[i].getCognome() << ":" << endl;
+        cout << indice << ". " << accounts[i].getNome() << " " << accounts[i].getCognome() << ":" << endl;
 
         for(int j = 0; j < account.getCarte().size(); j++) {
             indice += j;
-            cout << "  " << indice << "-> " << account.getCarte()[j].getNumeroConto() << ", " << account.getCarte()[j].getIban()
-                 << ", " << account.getCarte()[j].getDataScadenza() << ", " << account.getCarte()[j].getSaldo() << ";" << endl;
+            cout << "  " << indice << "-> [" << account.getCarte()[j].getNumeroConto() << ", " << account.getCarte()[j].getIban()
+                 << ", " << account.getCarte()[j].getDataScadenza() << ", " << account.getCarte()[j].getSaldo() << "];" << endl;
         }
         indice = i + 1;
     }
@@ -401,12 +406,13 @@ void Finanza :: stampaDatiCarte(Account account) {
 
 void Finanza :: stampaTransazioni(Account account, Carte carta) {
     int indice = 1;
+    cout << "STAMPA DATI DI TUTTE LE TRANSAZIONI:" << endl;
 
     for(int i = 0; i < accounts.size(); i++) {
         for(int j = 0; j < account.getCarte().size(); j++) {
             for(int k = 0; k < carta.getTransazioni().size(); k++) {
-                cout << "  " << indice << "-> " << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
-                     << ", " << carta.getTransazioni()[k].getGiorno() << ";" << endl;
+                cout << "  " << indice << "-> [" << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
+                     << ", " << carta.getTransazioni()[k].getGiorno() << "];" << endl;
                 indice++;
             }
         }
@@ -418,7 +424,7 @@ void Finanza :: stampaTransazioniAccount(Account account, Carte carta) {
 
     for(int i = 0; i < accounts.size(); i++) {
         indice += i;
-        cout << indice << "-> " << accounts[i].getNome() << " " << accounts[i].getCognome() << ":" << endl;
+        cout << indice << ". " << accounts[i].getNome() << " " << accounts[i].getCognome() << ":" << endl;
 
         for(int j = 0; j < account.getCarte().size(); j++) {
             indice += j;
@@ -426,8 +432,8 @@ void Finanza :: stampaTransazioniAccount(Account account, Carte carta) {
 
             for(int k = 0; k < carta.getTransazioni().size(); k++) {
                 indice += k;
-                cout << "  " << indice << "-> " << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
-                     << ", " << carta.getTransazioni()[k].getGiorno() << ";" << endl;
+                cout << "  " << indice << "-> [" << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
+                     << ", " << carta.getTransazioni()[k].getGiorno() << "];" << endl;
             }
             indice = j + 1;
         }

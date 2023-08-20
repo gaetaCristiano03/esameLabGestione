@@ -9,6 +9,7 @@ class Transazione {
 private:
     int data, importo;
     string giorno;
+    bool sceltaOperazione;
 
 public:
     Transazione() {};
@@ -20,24 +21,16 @@ public:
         return data;
     }
 
-    void setData(int data) {
-        this->data = data;
-    }
-
     int getImporto() const {
         return importo;
-    }
-
-    void setImporto(int importo) {
-        this->importo = importo;
     }
 
     string getGiorno() const {
         return giorno;
     }
 
-    void setGiorno(string giorno) {
-        this->giorno = giorno;
+    bool getBool() const {
+
     }
 };
 

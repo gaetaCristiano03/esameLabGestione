@@ -19,6 +19,8 @@ public:
 
     Account(const string &nome, const string &cognome, const string &email, const unsigned long int &numeroTelefono, const unsigned long int &eta);
 
+    void controlloDatiNelFileCarte(Account account);
+
     void inserisciDatiCarta(int &numeroConto, int &dataScadenza, int &saldo, string &iban);
 
     bool cercaCarta(Carte carta);
@@ -27,9 +29,11 @@ public:
 
     void modificaCarta();
 
-    void eliminaCarta();
+    void eliminaCarta(Account account);
 
     void setSaldo(int scelta, int indice, int importo);
+
+    void cambiaSalario(int indice, const Carte carta);
 
     //Getter and Setter
     string getNome() const {

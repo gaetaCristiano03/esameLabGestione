@@ -9,7 +9,7 @@ Carte :: Carte() {};
 Carte :: Carte(const int &numeroConto, const int &dataScadenza, const int &saldo, const string &iban) : numeroConto(numeroConto),
                                                                                                           dataScadenza(dataScadenza), saldo(saldo), iban(iban) {};
 
-void Carte:: inserisciDatiTransazione(int date, int importo, string giorno) {
+void Carte :: inserisciDatiTransazione(int &date, int &importo, string &giorno) {
     cout << " 1. Data transazione -> ";
     cin >> date;
     cout << "2. Giorno -> ";
@@ -18,6 +18,6 @@ void Carte:: inserisciDatiTransazione(int date, int importo, string giorno) {
     cin >> importo;
 }
 
-void Carte ::inserisciTransazione(Transazione transazione) {
+void Carte :: inserisciTransazione(Transazione transazione) {
     transazioni.push_back(transazione);
 }

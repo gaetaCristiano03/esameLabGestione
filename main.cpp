@@ -160,7 +160,7 @@ void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta) {
     Account acc = controlloEsistenzaAccount(finanza);
 
     cout << endl << "Ora inserisci i dati della carta: " << endl;
-    Carte car = controlloEsistenzaCarte(acc);
+    Carte car = controlloEsistenzaCarte(account);
 
     int scelta;
     cout << endl << "Perfetto! Ora scegli la tua operazione:" << endl;

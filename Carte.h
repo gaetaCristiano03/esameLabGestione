@@ -18,11 +18,11 @@ public:
 
     Carte(const int &numeroConto, const int &dataScadenza, const int &saldo, const string &iban);
 
-    void inserisciDatiTransazione(int date, int importo, string giorno);
+    void inserisciDatiTransazione(int &date, int &importo, string &giorno);
 
     void inserisciTransazione(Transazione transazione);
 
-//Getter & Setter:
+    //Getter & Setter:
     int getNumeroConto() const {
         return numeroConto;
     }
@@ -35,8 +35,12 @@ public:
         return saldo;
     }
 
+    void setSaldo(int saldo) {
+        this->saldo = saldo;
+    }
+
     void setSal(int sal) {
-        saldo = sal;
+        this->saldo = sal;
     }
 
     string getIban() const {
