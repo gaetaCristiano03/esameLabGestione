@@ -3,6 +3,7 @@
 #include "Account.h"
 #include "Carte.h"
 #include "Transazione.h"
+#include "Data.h"
 
 using namespace std;
 
@@ -15,6 +16,7 @@ void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta);
 int numeroCon, sal, dat, impor, condizionePrelDep, cod;
 string no, cog, em, ib, gi, cau;
 unsigned long int numeroTel, et;
+Data da;
 
 int main() {
     int scelta;
@@ -211,14 +213,14 @@ void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta) {
         cout << endl << "Ora inserisci i dati della carta: " << endl;
         Carte car = controlloEsistenzaCarte(account);
         cout << endl << "Ora inserisci i dati della transazione: " << endl;
-        carta.inserisciDatiTransazione(dat, impor, cod, gi, cau);
+        carta.inserisciDatiTransazione(da, impor, cod, cau);
         cout << "4. Era un prelievo(0) o un deposito(1)?";
         cin >> condizionePrelDep;
 
         if(condizionePrelDep == 0)
-            tran = Transazione(dat, impor, gi, true, cod, cau);
+            tran = Transazione(da, impor, true, cod, cau);
         else
-            tran = Transazione(dat, impor, gi, false, cod, cau);
+            tran = Transazione(da, impor, false, cod, cau);
 
         finanza.eliminaOperazione(account, carta, acc, car, tran);
     }

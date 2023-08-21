@@ -10,29 +10,32 @@ Carte :: Carte(const int &numeroConto, const int &saldo, const string &iban) : n
 
 bool Carte :: cercaTransazione(Transazione transazione) {
     for(int i = 0; i < transazioni.size(); i++) {
-        if(transazioni[i].getGiorno() == transazione.getGiorno()) {
-            if(transazioni[i].getData() == transazione.getData()) {
-                if(transazioni[i].getImporto() == transazione.getImporto()) {
-                    if(transazioni[i].getCodice() == transazione.getCodice())
-                        return true;
-                }
+        if(transazioni[i].getImporto() == transazione.getImporto()) {
+            if(transazioni[i].getCausale() == transazione.getCausale()) {
+                if (transazioni[i].getCodice() == transazione.getCodice())
+                    return true;
             }
         }
     }
     return false;
 }
 
-void Carte :: inserisciDatiTransazione(int &date, int &importo, int& codice, string &giorno, string& causale) {
-    cout << " 1. Data transazione -> ";
-    cin >> date;
-    cout << "2. Giorno -> ";
+void Carte :: inserisciDatiTransazione(Data &date, int &importo, int& codice, string& causale) {
+    int giorno, mese, anno;
+    cout << " 1. Giorno -> ";
     cin >> giorno;
-    cout << "3. Importo -> ";
+    cout << "2. Mese -> ";
+    cin >> mese;
+    cout<< "3. Anno -> ";
+    cin >> anno;
+    cout << "4. Importo -> ";
     cin >> importo;
-    cout << "4. Causale -> ";
+    cout << "5. Causale -> ";
     cin >> causale;
-    cout << "5. Codice -> ";
+    cout << "6. Codice -> ";
     cin >> codice;
+
+    date = Data(giorno, mese, anno);
 }
 
 void Carte :: inserisciTransazione(Transazione transazione) {

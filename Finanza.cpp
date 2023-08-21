@@ -3,8 +3,9 @@
 
 string nome, cognome, email, giorno, iba, caus;
 unsigned long int numeroTelefono, eta;
-int date, importo, codic;
+int importo, codic;
 bool controlloEsistenza;
+Data d;
 
 Finanza :: Finanza() {};
 
@@ -79,9 +80,8 @@ void Finanza :: eliminaDatiFileTransazione(Account account, Carte carta, Transaz
         string lineT, lineC, lineA;
 
         while (getline(file, lineT)) {
-            if (lineT != " Data -> " + to_string(transazione.getData()) + ", Giorno -> " + transazione.getGiorno()
-                         + ", Importo -> " + to_string(transazione.getImporto()) + ", Causale -> " + transazione.getCausale()
-                         + ", Codice -> " + to_string(transazione.getCodice()) + ";") {
+            if (lineT != " Data -> " + transazione.getData().stampaData() + ", Importo -> " + to_string(transazione.getImporto())
+                        + ", Causale -> " + transazione.getCausale() + ", Codice -> " + to_string(transazione.getCodice()) + ";") {
                 lines.push_back(lineT);
             }
         }
@@ -341,15 +341,15 @@ void Finanza :: eliminaAccount() {
 }
 
 void Finanza :: eseguiOperazione(Account &account, Carte &carta, Account acc, Carte car, int scelta) {
-    carta.inserisciDatiTransazione(date, importo, codic, giorno, caus);
+    carta.inserisciDatiTransazione(d, importo, codic, caus);
     Transazione transazione;
     string lineNameUser;
     int num;
 
     if(scelta == 1)
-        transazione = Transazione(date, importo, giorno, true, codic, caus);   //PRELIEVO
+        transazione = Transazione(d, importo, true, codic, caus);   //PRELIEVO
     else
-        transazione = Transazione(date, importo, giorno, false, codic, caus); //DEPOSITO
+        transazione = Transazione(d, importo, false, codic, caus); //DEPOSITO
 
     for(int i = 0; i < accounts.size(); i++) {
         if(accounts[i].getNumeroTelefono() == acc.getNumeroTelefono()) {
@@ -386,9 +386,8 @@ void Finanza :: eseguiOperazione(Account &account, Carte &carta, Account acc, Ca
                                           + ", Iban -> " + carta.getIban() + ";";
                         file << lineCont << endl;
 
-                        string lineTrans = " Data -> " + to_string(transazione.getData()) + ", Giorno -> " + transazione.getGiorno()
-                                           + ", Importo -> " + to_string(transazione.getImporto()) + ", Causale -> " + transazione.getCausale()
-                                           + ", Codice -> " + to_string(transazione.getCodice()) + ";";
+                        string lineTrans = " Data -> " + transazione.getData().stampaData() + ", Importo -> " + to_string(transazione.getImporto())
+                                           + ", Causale -> " + transazione.getCausale() + ", Codice -> " + to_string(transazione.getCodice()) + ";";
                         file << lineTrans << endl << endl;
 
                         cout << "Transazione completata!" << endl;
@@ -413,10 +412,9 @@ void Finanza :: modificaOperazione(Account &account, Carte &carta, unsigned long
                     for(int k = 0; k < carta.getTransazioni().size(); k++) {
                         if(carta.getTransazioni()[k].getBool() == condizione) {
 
-                            carta.inserisciDatiTransazione(date, importo, codic, giorno, caus);
-                            Transazione transazionePost(date, importo, giorno, condizione, codic, caus);
-                            Transazione transazionePre(carta.getTransazioni()[k].getData(), carta.getTransazioni()[k].getImporto(),
-                                                       carta.getTransazioni()[k].getGiorno(), condizione, codic, caus);
+                            carta.inserisciDatiTransazione(d, importo, codic, caus);
+                            Transazione transazionePost(d, importo, condizione, codic, caus);
+                            Transazione transazionePre(carta.getTransazioni()[k].getData(), carta.getTransazioni()[k].getImporto(), condizione, codic, caus);
                             carta.sostituisciTransazione(k, transazionePost);
                             cout << "Modifica effettuata!" << endl;
 
@@ -427,13 +425,11 @@ void Finanza :: modificaOperazione(Account &account, Carte &carta, unsigned long
                                 string line;
 
                                 while (getline(file, line)) {
-                                    if (line == " Data -> " + to_string(transazionePre.getData()) + ", Giorno -> " + transazionePre.getGiorno()
-                                                + ", Importo -> " + to_string(transazionePre.getImporto()) + ", Causale -> " + transazionePre.getCausale()
-                                                + ", Codice -> " + to_string(transazionePre.getCodice()) + ";") {
+                                    if (line == " Data -> " + transazionePre.getData().stampaData() + ", Importo -> " + to_string(transazionePre.getImporto())
+                                                + ", Causale -> " + transazionePre.getCausale() + ", Codice -> " + to_string(transazionePre.getCodice()) + ";") {
 
-                                        line = " Data -> " + to_string(transazionePost.getData()) + ", Giorno -> " + transazionePost.getGiorno()
-                                               + ", Importo -> " + to_string(transazionePost.getImporto()) + ", Causale -> " + transazionePost.getCausale()
-                                               + ", Codice -> " + to_string(transazionePost.getCodice()) + ";";
+                                        line = " Data -> " + transazionePost.getData().stampaData() + ", Importo -> " + to_string(transazionePost.getImporto())
+                                               + ", Causale -> " + transazionePost.getCausale() + ", Codice -> " + to_string(transazionePost.getCodice()) + ";";
                                     }
                                     lines.push_back(line);
                                 }
@@ -469,7 +465,7 @@ void Finanza :: eliminaOperazione(Account &account, Carte &carta, Account acc, C
                     if(account.getCarte()[j].getIban() == car.getIban()) {
 
                         for(int k = 0; k < carta.getTransazioni().size(); k++) {
-                            if(carta.getTransazioni()[k].getGiorno() == transazione.getGiorno()) {
+                            if(carta.getTransazioni()[k].getCodice() == transazione.getCodice()) {
 
                                 carta.eliminaTransazione(k);
                                 eliminaDatiFileTransazione(acc, car, transazione);
@@ -521,9 +517,8 @@ void Finanza :: stampaTransazioni(Account account, Carte carta) {
     for(int i = 0; i < accounts.size(); i++) {
         for(int j = 0; j < account.getCarte().size(); j++) {
             for(int k = 0; k < carta.getTransazioni().size(); k++) {
-                cout << "  " << indice << "-> [" << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
-                     << ", " << carta.getTransazioni()[k].getGiorno() << ", " << carta.getTransazioni()[k].getCausale()
-                     << ", " << carta.getTransazioni()[k].getCodice() << "]" << endl;
+                cout << "  " << indice << "-> [" << carta.getTransazioni()[k].getData().stampaData() << ", " << carta.getTransazioni()[k].getImporto()
+                     << ", " << carta.getTransazioni()[k].getCausale() << ", " << carta.getTransazioni()[k].getCodice() << "]" << endl;
                 indice++;
             }
         }
@@ -543,9 +538,8 @@ void Finanza :: stampaTransazioniAccount(Account account, Carte carta) {
 
             for(int k = 0; k < carta.getTransazioni().size(); k++) {
                 indice += k;
-                cout << "  " << indice << "-> [" << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
-                     << ", " << carta.getTransazioni()[k].getGiorno() << ", " << carta.getTransazioni()[k].getCausale()
-                     << ", " << carta.getTransazioni()[k].getCodice() << "]" << endl;
+                cout << "  " << indice << "-> [" << carta.getTransazioni()[k].getData().stampaData() << ", " << carta.getTransazioni()[k].getImporto()
+                     << ", " << carta.getTransazioni()[k].getCausale() << ", " << carta.getTransazioni()[k].getCodice() << "]" << endl;
             }
             indice = j + 1;
         }
@@ -599,16 +593,16 @@ void Finanza :: stampaRicercaAvanzata(Account account, Carte carta) {
     }
 
     else if(scelta == 3) {
-        cout << "Inserisci un giorno -> ";
-        cin >> giorno;
+        cout << "Inserisci un codice -> ";
+        cin >> codic;
 
         for(int i = 0; i < accounts.size(); i++) {
             for(int j = 0; j < account.getCarte().size(); j++) {
                 for(int k = 0; k < carta.getTransazioni().size(); k++) {
-                    if(carta.getTransazioni()[k].getGiorno() == giorno) {
+                    if(carta.getTransazioni()[k].getCodice() == codic) {
                         indice += k;
-                        cout << "  " << indice << "-> [" << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
-                             << ", " << carta.getTransazioni()[k].getGiorno() << "];" << endl;
+                        cout << "  " << indice << "-> [" << carta.getTransazioni()[k].getData().stampaData() << ", " << carta.getTransazioni()[k].getImporto()
+                             << ", " << carta.getTransazioni()[k].getCausale() << ", " << carta.getTransazioni()[k].getCodice() << "]" << endl;
                     }
                 }
             }

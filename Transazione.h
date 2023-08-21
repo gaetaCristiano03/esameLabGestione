@@ -2,24 +2,26 @@
 #define ESAMELABGESTIONE_TRANSAZIONE_H
 
 #include <string>
+#include "Data.h"
 
 using namespace std;
 
 class Transazione {
 private:
-    int data, importo, codice;
-    string giorno, causale;
+    int importo, codice;
+    string causale;
     bool sceltaOperazione;
+    Data data;
 
 public:
     Transazione() {};
 
-    Transazione(const int& data, const int& importo, const string& giorno, const bool& sceltaOperazione, const int& codice,
-                const string& causale) : data(data), importo(importo), giorno(giorno), sceltaOperazione(sceltaOperazione),
+    Transazione(const Data& data, const int& importo, const bool& sceltaOperazione, const int& codice,
+                const string& causale) : data(data), importo(importo), sceltaOperazione(sceltaOperazione),
                 codice(codice), causale(causale) {};
 
     //Getter and Setter
-    int getData() const {
+    Data getData() const {
         return data;
     }
 
@@ -29,10 +31,6 @@ public:
 
     int getCodice() const {
         return codice;
-    }
-
-    string getGiorno() const {
-        return giorno;
     }
 
     string getCausale() const {
