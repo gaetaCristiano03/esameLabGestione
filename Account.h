@@ -21,7 +21,7 @@ public:
 
     void controlloDatiNelFileCarte(Account account);
 
-    void inserisciDatiCarta(int &numeroConto, int &dataScadenza, int &saldo, string &iban);
+    void inserisciDatiCarta(int &numeroConto, int &saldo, string &iban);
 
     bool cercaCarta(Carte carta);
 

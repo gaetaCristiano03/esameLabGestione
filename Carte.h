@@ -10,13 +10,13 @@ using namespace std;
 class Carte {
 private:
     vector<Transazione> transazioni;
-    int numeroConto, dataScadenza, saldo;
+    int numeroConto, saldo;
     string iban;
 
 public:
     Carte();
 
-    Carte(const int &numeroConto, const int &dataScadenza, const int &saldo, const string &iban);
+    Carte(const int &numeroConto, const int &saldo, const string &iban);
 
     void inserisciDatiTransazione(int &date, int &importo, int& codice, string &giorno, string& causale);
 
@@ -33,20 +33,12 @@ public:
         return numeroConto;
     }
 
-    int getDataScadenza() const {
-        return dataScadenza;
-    }
-
     int getSaldo() const {
         return saldo;
     }
 
     void setSaldo(int saldo) {
         this->saldo = saldo;
-    }
-
-    void setSal(int sal) {
-        this->saldo = sal;
     }
 
     string getIban() const {

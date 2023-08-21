@@ -39,26 +39,22 @@ void Account :: controlloDatiNelFileCarte(Account account) {
     }
 }
 
-void Account :: inserisciDatiCarta(int &numeroConto, int &dataScadenza, int &saldo, string &iban) {
+void Account :: inserisciDatiCarta(int &numeroConto, int &saldo, string &iban) {
     cout << "INSERIMENTO DATI CARTA:" << endl;
     cout << " 1. Numero del conto -> ";
     cin >> numeroConto;
-    cout << "2. Data di scadenza -> ";
-    cin >> dataScadenza;
-    cout << "3. Saldo -> ";
+    cout << "2. Saldo -> ";
     cin >> saldo;
-    cout << "4. Iban -> ";
+    cout << "3. Iban -> ";
     cin >> iban;
 }
 
 bool Account :: cercaCarta(Carte carta) {
     for(int i = 0; i < carte.size(); i++) {
         if(carte[i].getNumeroConto() == carta.getNumeroConto()) {
-            if(carte[i].getDataScadenza() == carta.getDataScadenza()) {
-                if(carte[i].getIban() == carta.getIban()) {
-                    if(carte[i].getSaldo() == carta.getSaldo()) {
-                        return true;
-                    }
+            if(carte[i].getIban() == carta.getIban()) {
+                if(carte[i].getSaldo() == carta.getSaldo()) {
+                    return true;
                 }
             }
         }
@@ -68,8 +64,8 @@ bool Account :: cercaCarta(Carte carta) {
 
 void Account :: creazioneCarta(Account account) {
 
-    inserisciDatiCarta(numeroConto, dataScadenza, saldo, iban);
-    Carte carta(numeroConto, dataScadenza, saldo, iban);
+    inserisciDatiCarta(numeroConto, saldo, iban);
+    Carte carta(numeroConto, saldo, iban);
     controlloEs = cercaCarta(carta);
 
     for(int i = 0; i < carte.size(); i++) {
@@ -86,8 +82,7 @@ void Account :: creazioneCarta(Account account) {
         if (file.is_open()) {
             string lineNameUser = "Conto di " + account.getNome() + " " + account.getCognome() + ":";
             file << lineNameUser << endl;
-            string lineCont = " Numero carta -> " + to_string(carta.getNumeroConto()) + ", Data scadenza -> " +
-                              to_string(carta.getDataScadenza()) + ", Salario -> " + to_string(carta.getSaldo())
+            string lineCont = " Numero carta -> " + to_string(carta.getNumeroConto()) + ", Salario -> " + to_string(carta.getSaldo())
                               + ", Iban -> " + carta.getIban() + ";";
             file << lineCont << endl << endl;
         } else cout << "Impossibile aprire il file." << endl;
@@ -101,14 +96,14 @@ void Account :: creazioneCarta(Account account) {
 
 void Account :: modificaCarta() {
     Carte cartaPre;
-    inserisciDatiCarta(numeroConto, dataScadenza, saldo, iban);
-    cartaPre = Carte(numeroConto, dataScadenza, saldo, iban);
+    inserisciDatiCarta(numeroConto, saldo, iban);
+    cartaPre = Carte(numeroConto, saldo, iban);
     controlloEs = cercaCarta(cartaPre);
 
-    if(controlloEs == false) {
+    if(controlloEs == true) {
         cout << "Inserisci i dati della nuova carta:" << endl;
-        inserisciDatiCarta(numeroConto, dataScadenza, saldo, iban);
-        Carte cartaPost(numeroConto, dataScadenza, saldo, iban);
+        inserisciDatiCarta(numeroConto, saldo, iban);
+        Carte cartaPost(numeroConto, saldo, iban);
 
         for (int i = 0; i < carte.size(); i++) {
             if (carte[i].getIban() == cartaPre.getIban()) {
@@ -121,14 +116,10 @@ void Account :: modificaCarta() {
                     string line;
 
                     while (getline(file, line)) {
-                        if (line == " Numero carta -> " + to_string(cartaPre.getNumeroConto()) + ", Data scadenza -> " +
-                                    to_string(cartaPre.getDataScadenza()) + ", Salario -> " +
-                                    to_string(cartaPre.getSaldo())
+                        if (line == " Numero carta -> " + to_string(cartaPre.getNumeroConto()) + ", Salario -> " + to_string(cartaPre.getSaldo())
                                     + ", Iban -> " + cartaPre.getIban() + ";") {
 
-                            line = " Numero carta -> " + to_string(cartaPost.getNumeroConto()) + ", Data scadenza -> " +
-                                   to_string(cartaPost.getDataScadenza()) + ", Salario -> " +
-                                   to_string(cartaPost.getSaldo())
+                            line = " Numero carta -> " + to_string(cartaPost.getNumeroConto()) + ", Salario -> " + to_string(cartaPost.getSaldo())
                                    + ", Iban -> " + cartaPost.getIban() + ";";
                         }
                         lines.push_back(line);
@@ -159,8 +150,8 @@ void Account :: eliminaCarta(Account account) {
     cout << "ELIMINAZIONE CARTA:" << endl;
     cout << "Inserisci i dati della carta:" << endl;
 
-    inserisciDatiCarta(numeroConto, dataScadenza, saldo, iban);
-    carta = Carte(numeroConto, dataScadenza, saldo, iban);
+    inserisciDatiCarta(numeroConto, saldo, iban);
+    carta = Carte(numeroConto, saldo, iban);
     controlloEs = cercaCarta(carta);
 
     if(controlloEs == true) {
@@ -177,8 +168,7 @@ void Account :: eliminaCarta(Account account) {
                 if (file.is_open()) {
 
                     while (getline(file, line)) {
-                        if (line != " Numero carta -> " + to_string(carta.getNumeroConto()) + ", Data scadenza -> " +
-                                    to_string(carta.getDataScadenza()) + ", Salario -> " + to_string(carta.getSaldo())
+                        if (line != " Numero carta -> " + to_string(carta.getNumeroConto()) + ", Salario -> " + to_string(carta.getSaldo())
                                     + ", Iban -> " + carta.getIban() + ";") {
                             lines.push_back(line);
                         }

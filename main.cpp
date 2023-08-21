@@ -12,7 +12,7 @@ int stampaMenu();
 void stampaMenuCarte(Finanza finanza, Account &account);
 void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta);
 
-int numeroCon, dataScad, sal, dat, impor, condizionePrelDep, cod;
+int numeroCon, sal, dat, impor, condizionePrelDep, cod;
 string no, cog, em, ib, gi, cau;
 unsigned long int numeroTel, et;
 
@@ -73,8 +73,8 @@ Carte controlloEsistenzaCarte(Account account) {
     Carte carta;
 
     do {
-        account.inserisciDatiCarta(numeroCon, dataScad, sal, ib);
-        carta = Carte(numeroCon, dataScad, sal, ib);
+        account.inserisciDatiCarta(numeroCon, sal, ib);
+        carta = Carte(numeroCon, sal, ib);
         control = account.cercaCarta(carta);
     } while(control == false);
 

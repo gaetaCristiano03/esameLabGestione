@@ -6,8 +6,7 @@ using namespace std;
 
 Carte :: Carte() {};
 
-Carte :: Carte(const int &numeroConto, const int &dataScadenza, const int &saldo, const string &iban) : numeroConto(numeroConto),
-                                                                                                          dataScadenza(dataScadenza), saldo(saldo), iban(iban) {};
+Carte :: Carte(const int &numeroConto, const int &saldo, const string &iban) : numeroConto(numeroConto), saldo(saldo), iban(iban) {};
 
 bool Carte :: cercaTransazione(Transazione transazione) {
     for(int i = 0; i < transazioni.size(); i++) {

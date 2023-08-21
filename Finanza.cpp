@@ -87,8 +87,7 @@ void Finanza :: eliminaDatiFileTransazione(Account account, Carte carta, Transaz
         }
 
         while (getline(file, lineC)) {
-            if (lineC != " Numero carta -> " + to_string(carta.getNumeroConto()) + ", Data scadenza -> " +
-                         to_string(carta.getDataScadenza()) + ", Salario -> " + to_string(carta.getSaldo())
+            if (lineC != " Numero carta -> " + to_string(carta.getNumeroConto()) + ", Salario -> " + to_string(carta.getSaldo())
                          + ", Iban -> " + carta.getIban() + ";") {
                 lines.push_back(lineC);
             }
@@ -383,9 +382,8 @@ void Finanza :: eseguiOperazione(Account &account, Carte &carta, Account acc, Ca
 
                         file << lineNameUser << endl;
 
-                        string lineCont = " Numero carta -> " + to_string(car.getNumeroConto()) + ", Data scadenza -> " +
-                                          to_string(car.getDataScadenza()) + ", Salario -> " + to_string(car.getSaldo())
-                                          + ", Iban -> " + car.getIban() + ";";
+                        string lineCont = " Numero carta -> " + to_string(carta.getNumeroConto()) + ", Salario -> " + to_string(carta.getSaldo())
+                                          + ", Iban -> " + carta.getIban() + ";";
                         file << lineCont << endl;
 
                         string lineTrans = " Data -> " + to_string(transazione.getData()) + ", Giorno -> " + transazione.getGiorno()
@@ -510,7 +508,7 @@ void Finanza :: stampaDatiCarte(Account account) {
         for(int j = 0; j < account.getCarte().size(); j++) {
             indice += j;
             cout << "  " << indice << "-> [" << account.getCarte()[j].getNumeroConto() << ", " << account.getCarte()[j].getIban()
-                 << ", " << account.getCarte()[j].getDataScadenza() << ", " << account.getCarte()[j].getSaldo() << "];" << endl;
+                 << ", " << account.getCarte()[j].getSaldo() << "];" << endl;
         }
         indice = i + 1;
     }
@@ -594,8 +592,7 @@ void Finanza :: stampaRicercaAvanzata(Account account, Carte carta) {
                     indice += j;
                     cout << "  " << indice << "-> [" << account.getCarte()[j].getNumeroConto() << ", "
                          << account.getCarte()[j].getIban()
-                         << ", " << account.getCarte()[j].getDataScadenza() << ", " << account.getCarte()[j].getSaldo()
-                         << "];" << endl;
+                         << ", " << account.getCarte()[j].getSaldo() << "];" << endl;
                 }
             }
         }
