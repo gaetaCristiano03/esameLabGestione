@@ -13,8 +13,8 @@ int stampaMenu();
 void stampaMenuCarte(Finanza finanza, Account &account);
 void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta);
 
-int numeroCon, sal, dat, impor, condizionePrelDep, cod;
-string no, cog, em, ib, gi, cau;
+int numeroCon, sal, impor, condizionePrelDep, cod;
+string no, cog, em, ib, cau;
 unsigned long int numeroTel, et;
 Data da;
 
@@ -58,26 +58,32 @@ int main() {
 }
 
 Account controlloEsistenzaAccount(Finanza finanza) {
-    bool controllo;
+    bool controllo = true;
     Account acc;
 
     do {
         finanza.inserisciDatiAccount(no, cog, em, numeroTel, et);
         acc = Account(no, cog, em, numeroTel, et);
         controllo = finanza.cercaAccount(acc);
+
+        if(controllo == false)
+            cout << "Account non trovato, riprovare." << endl;
     } while(controllo == false);
 
     return acc;
 }
 
 Carte controlloEsistenzaCarte(Account account) {
-    bool control;
+    bool control = true;
     Carte carta;
 
     do {
         account.inserisciDatiCarta(numeroCon, sal, ib);
         carta = Carte(numeroCon, sal, ib);
         control = account.cercaCarta(carta);
+
+        if(control == false)
+            cout << "Account non trovato, riprovare." << endl;
     } while(control == false);
 
     return carta;

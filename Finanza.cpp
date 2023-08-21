@@ -367,6 +367,7 @@ void Finanza :: eseguiOperazione(Account &account, Carte &carta, Account acc, Ca
                         } else cout << "Errore nell'operazione, credito insuffiente." << endl;
                     }
                     else {
+                        carta.inserisciTransazione(transazione);
                         num = account.getCarte()[j].getSaldo() + transazione.getImporto();
                         car.setSaldo(num);
                         account.cambiaSalario(j, car);
@@ -378,12 +379,12 @@ void Finanza :: eseguiOperazione(Account &account, Carte &carta, Account acc, Ca
                         if(transazione.getBool() == true)
                             lineNameUser = "Prelievo su carta di " + acc.getNome() + " " + acc.getCognome() + ":";
                         else
-                            lineNameUser = "Deposito su carta di " + account.getNome() + " " + account.getCognome() + ":";
+                            lineNameUser = "Deposito su carta di " + acc.getNome() + " " + acc.getCognome() + ":";
 
                         file << lineNameUser << endl;
 
-                        string lineCont = " Numero carta -> " + to_string(carta.getNumeroConto()) + ", Salario -> " + to_string(carta.getSaldo())
-                                          + ", Iban -> " + carta.getIban() + ";";
+                        string lineCont = " Numero carta -> " + to_string(car.getNumeroConto()) + ", Salario -> " + to_string(car.getSaldo())
+                                          + ", Iban -> " + car.getIban() + ";";
                         file << lineCont << endl;
 
                         string lineTrans = " Data -> " + transazione.getData().stampaData() + ", Importo -> " + to_string(transazione.getImporto())
