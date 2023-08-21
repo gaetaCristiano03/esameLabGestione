@@ -80,7 +80,8 @@ void Finanza :: eliminaDatiFileTransazione(Account account, Carte carta, Transaz
 
         while (getline(file, lineT)) {
             if (lineT != " Data -> " + to_string(transazione.getData()) + ", Giorno -> " + transazione.getGiorno()
-                         + ", Importo -> " + to_string(transazione.getImporto()) + ";") {
+                         + ", Importo -> " + to_string(transazione.getImporto()) + ", Causale -> " + transazione.getCausale()
+                         + ", Codice -> " + to_string(transazione.getCodice()) + ";") {
                 lines.push_back(lineT);
             }
         }
@@ -388,7 +389,8 @@ void Finanza :: eseguiOperazione(Account &account, Carte &carta, Account acc, Ca
                         file << lineCont << endl;
 
                         string lineTrans = " Data -> " + to_string(transazione.getData()) + ", Giorno -> " + transazione.getGiorno()
-                                           + ", Importo -> " + to_string(transazione.getImporto()) + ";";
+                                           + ", Importo -> " + to_string(transazione.getImporto()) + ", Causale -> " + transazione.getCausale()
+                                           + ", Codice -> " + to_string(transazione.getCodice()) + ";";
                         file << lineTrans << endl << endl;
 
                         cout << "Transazione completata!" << endl;
@@ -428,10 +430,12 @@ void Finanza :: modificaOperazione(Account &account, Carte &carta, unsigned long
 
                                 while (getline(file, line)) {
                                     if (line == " Data -> " + to_string(transazionePre.getData()) + ", Giorno -> " + transazionePre.getGiorno()
-                                                + ", Importo -> " + to_string(transazionePre.getImporto()) + ";") {
+                                                + ", Importo -> " + to_string(transazionePre.getImporto()) + ", Causale -> " + transazionePre.getCausale()
+                                                + ", Codice -> " + to_string(transazionePre.getCodice()) + ";") {
 
                                         line = " Data -> " + to_string(transazionePost.getData()) + ", Giorno -> " + transazionePost.getGiorno()
-                                               + ", Importo -> " + to_string(transazionePost.getImporto()) + ";";
+                                               + ", Importo -> " + to_string(transazionePost.getImporto()) + ", Causale -> " + transazionePost.getCausale()
+                                               + ", Codice -> " + to_string(transazionePost.getCodice()) + ";";
                                     }
                                     lines.push_back(line);
                                 }
@@ -520,7 +524,8 @@ void Finanza :: stampaTransazioni(Account account, Carte carta) {
         for(int j = 0; j < account.getCarte().size(); j++) {
             for(int k = 0; k < carta.getTransazioni().size(); k++) {
                 cout << "  " << indice << "-> [" << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
-                     << ", " << carta.getTransazioni()[k].getGiorno() << "];" << endl;
+                     << ", " << carta.getTransazioni()[k].getGiorno() << ", " << carta.getTransazioni()[k].getCausale()
+                     << ", " << carta.getTransazioni()[k].getCodice() << "]" << endl;
                 indice++;
             }
         }
@@ -541,7 +546,8 @@ void Finanza :: stampaTransazioniAccount(Account account, Carte carta) {
             for(int k = 0; k < carta.getTransazioni().size(); k++) {
                 indice += k;
                 cout << "  " << indice << "-> [" << carta.getTransazioni()[k].getData() << ", " << carta.getTransazioni()[k].getImporto()
-                     << ", " << carta.getTransazioni()[k].getGiorno() << "];" << endl;
+                     << ", " << carta.getTransazioni()[k].getGiorno() << ", " << carta.getTransazioni()[k].getCausale()
+                     << ", " << carta.getTransazioni()[k].getCodice() << "]" << endl;
             }
             indice = j + 1;
         }
