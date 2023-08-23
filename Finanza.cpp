@@ -419,7 +419,9 @@ void Finanza :: modificaOperazione(Account &account, Carte &carta, unsigned long
 
                             carta.inserisciDatiTransazione(d, importo, codic, caus);
                             Transazione transazionePost(d, importo, condizione, codic, caus);
-                            Transazione transazionePre(carta.getTransazioni()[k].getData(), carta.getTransazioni()[k].getImporto(), condizione, codic, caus);
+                            Transazione transazionePre(carta.getTransazioni()[k].getData(), carta.getTransazioni()[k].getImporto(),
+                                                       carta.getTransazioni()[k].getBool(), carta.getTransazioni()[k].getCodice(),
+                                                       carta.getTransazioni()[k].getCausale());
                             carta.sostituisciTransazione(k, transazionePost);
                             cout << "Modifica effettuata!" << endl;
 
