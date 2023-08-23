@@ -49,6 +49,10 @@ public:
         return transazioni;
     }
 
+    void setTransazioni(const Transazione transazione) {
+        transazioni.push_back(transazione);
+    }
+
 };
 
 #endif //ESAMELABGESTIONE_CARTE_H

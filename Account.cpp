@@ -91,7 +91,6 @@ void Account :: creazioneCarta(Account account) {
     }
     else
         cout << "Carta gia' esistente, inserire dati diversi." << endl;
-
 }
 
 void Account :: modificaCarta() {

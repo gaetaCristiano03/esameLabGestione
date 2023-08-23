@@ -46,7 +46,7 @@ void Carte :: sostituisciTransazione(int indice, Transazione transazione) {
     transazioni[indice] = transazione;
 }
 
-void Carte ::eliminaTransazione(int indice) {
+void Carte :: eliminaTransazione(int indice) {
     auto i = transazioni.begin() + indice;
     transazioni.erase(i);
 }

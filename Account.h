@@ -58,6 +58,10 @@ public:
         return carte;
     }
 
+    void setCarte(const Carte carta) {
+        carte.push_back(carta);
+    }
+
 };
 
 #endif //ESAMELABGESTIONE_ACCOUNT_H
