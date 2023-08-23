@@ -23,6 +23,7 @@ void Finanza :: inserisciDatiAccount(string &nome, string &cognome, string &emai
     cin >> eta;
 }
 
+//CONTROLLO DATI NEL FILE
 void Finanza :: controlloDatiNelFile(Account accountPre, Account accountPost) {
     ifstream file("Salvataggio_dati.txt");
 
@@ -119,6 +120,7 @@ void Finanza :: eliminaDatiFileTransazione(Account account, Carte carta, Transaz
     }
 }
 
+//STAMPA MENU'
 void Finanza :: stampaMenuAccount() {
     int scelta;
 
@@ -209,6 +211,7 @@ bool Finanza :: cercaAccount(const Account account) {
     return false;
 }
 
+//CREAZIONE - MODIFICA - ELIMINAZIONE ACCOUNT
 void Finanza :: creazioneAccount() {
     inserisciDatiAccount(nome, cognome, email, numeroTelefono, eta);
     Account account(nome, cognome, email, numeroTelefono, eta);
@@ -340,6 +343,7 @@ void Finanza :: eliminaAccount() {
     }
 }
 
+//CREAZIONE - MODIFICA - ELIMINAZIONE TRANSAZIONE
 void Finanza :: eseguiOperazione(Account &account, Carte &carta, Account acc, Carte car, int scelta) {
     carta.inserisciDatiTransazione(d, importo, codic, caus);
     Transazione transazione;
@@ -482,6 +486,7 @@ void Finanza :: eliminaOperazione(Account &account, Carte &carta, Account acc, C
     }
 }
 
+//SEZIONE VISUALIZZAZIONE
 void Finanza :: stampaDatiAccount() {
     int indice = 1;
     cout << "STAMPA DATI DI TUTTI GLI UTENTI:" << endl;

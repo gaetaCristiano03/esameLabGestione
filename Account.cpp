@@ -12,6 +12,7 @@ Account :: Account() {};
 Account :: Account(const string &nome, const string &cognome, const string &email, const unsigned long int &numeroTelefono, const unsigned long int &eta) :
         nome(nome), cognome(cognome), email(email), numeroTelefono(numeroTelefono), eta(eta){};
 
+//CONTROLLO DATI NEL FILE
 void Account :: controlloDatiNelFileCarte(Account account) {
     ifstream file("Salvataggio_dati.txt");
 
@@ -49,6 +50,7 @@ void Account :: inserisciDatiCarta(int &numeroConto, int &saldo, string &iban) {
     cin >> iban;
 }
 
+//RICERCA - CREAZIONE - MODIFICA - ELIMINAZIONE CARTA
 bool Account :: cercaCarta(Carte carta) {
     for(int i = 0; i < carte.size(); i++) {
         if(carte[i].getNumeroConto() == carta.getNumeroConto()) {
@@ -192,6 +194,7 @@ void Account :: eliminaCarta(Account account) {
         cout << "Carta non trovata, riprovare." << endl;
 }
 
+//FUNZIONE PER LA CREAZIONE TRANSAZIONE
 void Account :: cambiaSalario(int indice, const Carte carta) {
     carte[indice] = carta;
 }

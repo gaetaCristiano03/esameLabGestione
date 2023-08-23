@@ -49,6 +49,10 @@ public:
 
     void stampaRicercaAvanzata(Account account, Carte carta);
 
+    void setAccount(const Account account) {
+        accounts.push_back(account);
+    }
+
 };
 
 #endif //ESAMELABGESTIONE_FINANZA_H

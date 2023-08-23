@@ -8,6 +8,7 @@ Carte :: Carte() {};
 
 Carte :: Carte(const int &numeroConto, const int &saldo, const string &iban) : numeroConto(numeroConto), saldo(saldo), iban(iban) {};
 
+//RICERCA TRANSAZIONE
 bool Carte :: cercaTransazione(Transazione transazione) {
     for(int i = 0; i < transazioni.size(); i++) {
         if(transazioni[i].getImporto() == transazione.getImporto()) {
@@ -38,6 +39,7 @@ void Carte :: inserisciDatiTransazione(Data &date, int &importo, int& codice, st
     date = Data(giorno, mese, anno);
 }
 
+//INSERIMENTO - SOSTITUZIONE - ELIMINAZIONE TRANSAZIONE NEL VETTORE
 void Carte :: inserisciTransazione(Transazione transazione) {
     transazioni.push_back(transazione);
 }
