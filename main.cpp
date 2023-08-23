@@ -10,7 +10,7 @@ using namespace std;
 Account controlloEsistenzaAccount(Finanza finanza);
 Carte controlloEsistenzaCarte(Account account);
 int stampaMenu();
-void stampaMenuCarte(Finanza finanza, Account &account);
+void stampaMenuCarte(const Finanza &finanza, Account &account);
 void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta);
 
 int numeroCon, sal, impor, condizionePrelDep, cod;
@@ -29,6 +29,9 @@ int main() {
         scelta = stampaMenu();
 
         switch(scelta) {
+            case 0:
+                return 0;
+
             case 1:
                 finanza.stampaMenuAccount();
                 break;
@@ -58,7 +61,7 @@ int main() {
 }
 
 Account controlloEsistenzaAccount(Finanza finanza) {
-    bool controllo = true;
+    bool controllo;
     Account acc;
 
     do {
@@ -66,15 +69,15 @@ Account controlloEsistenzaAccount(Finanza finanza) {
         acc = Account(no, cog, em, numeroTel, et);
         controllo = finanza.cercaAccount(acc);
 
-        if(controllo == false)
+        if(!controllo)
             cout << "Account non trovato, riprovare." << endl;
-    } while(controllo == false);
+    } while(!controllo);
 
     return acc;
 }
 
 Carte controlloEsistenzaCarte(Account account) {
-    bool control = true;
+    bool control;
     Carte carta;
 
     do {
@@ -82,9 +85,9 @@ Carte controlloEsistenzaCarte(Account account) {
         carta = Carte(numeroCon, sal, ib);
         control = account.cercaCarta(carta);
 
-        if(control == false)
+        if(!control)
             cout << "Account non trovato, riprovare." << endl;
-    } while(control == false);
+    } while(!control);
 
     return carta;
 
@@ -98,7 +101,7 @@ int stampaMenu() {
     cout << "| |  \\/ ___  ___| |_ _  ___  _ __   ___         " << endl;
     cout << "| | __ / _ \\/ __| __| |/ _ \\| '_ \\ / _ \\     " << endl;
     cout << "| |_\\ \\  __/\\__ \\ |_| | (_) | | | |  __/     " << endl;
-    cout << "\\____/\\___||___/\\__|_|\\___/|_| |_|\\___|     " << endl;
+    cout << " \\____/\\___||___/\\__|_|\\___/|_| |_|\\___|     " << endl;
 
     cout << " __ _                       _            _                  " << endl;
     cout << "/ _(_)                     (_)          (_)         _       " << endl;
@@ -118,10 +121,17 @@ int stampaMenu() {
     cin >> scelta;
     cout << endl;
 
+    while (scelta < 0 || scelta > 5) {
+        cout << "Inserimento I/O errato, riprovare." << endl;
+        cout << "Scegli una opzione -> ";
+        cin >> scelta;
+    }
+    cout << endl;
+
     return scelta;
 }
 
-void stampaMenuCarte(Finanza finanza, Account &account) {
+void stampaMenuCarte(const Finanza &finanza, Account &account) {
     int scelta;
 
     cout << "GESTIONE CONTI/CARTE:" << endl;

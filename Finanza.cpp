@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Finanza.h"
 
-string nome, cognome, email, giorno, iba, caus;
+string nome, cognome, email, iba, caus;
 unsigned long int numeroTelefono, eta;
 int importo, codic;
 bool controlloEsistenza;
@@ -95,7 +95,7 @@ void Finanza :: eliminaDatiFileTransazione(Account account, Carte carta, Transaz
         }
 
         while (getline(file, lineA)) {
-            if(transazione.getBool() == true) {
+            if(transazione.getBool()) {
                 if (lineA != "Prelievo su carta di " + account.getNome() + " " + account.getCognome() + ":")
                     lines.push_back(lineA);
             }
@@ -223,7 +223,7 @@ void Finanza :: creazioneAccount() {
             controlloEsistenza = true;
     }
 
-    if(controlloEsistenza == false) {
+    if(!controlloEsistenza) {
         accounts.push_back(account);
         cout << "Creazione utente completata!" << endl;
 
@@ -252,7 +252,7 @@ void Finanza :: modificaAccount() {
     Account accountPre(nome, cognome, email, numeroTelefono, eta);
     controlloEsistenza = cercaAccount(accountPre);
 
-    if(controlloEsistenza == true) {
+    if(controlloEsistenza) {
         cout << endl <<"Ora inserisci i nuovi dati: " << endl;
         inserisciDatiAccount(nome, cognome, email, numeroTelefono, eta);
         Account accountPost(nome, cognome, email, numeroTelefono, eta);
@@ -361,7 +361,7 @@ void Finanza :: eseguiOperazione(Account &account, Carte &carta, Account acc, Ca
             for(int j = 0; j < account.getCarte().size(); j++) {
                 if(account.getCarte()[j].getIban() == car.getIban()) {
 
-                    if(transazione.getBool() == true) {
+                    if(transazione.getBool()) {
                         if (account.getCarte()[j].getSaldo() > transazione.getImporto()) {
                             carta.inserisciTransazione(transazione);
                             num = account.getCarte()[j].getSaldo() - transazione.getImporto();
@@ -380,7 +380,7 @@ void Finanza :: eseguiOperazione(Account &account, Carte &carta, Account acc, Ca
                     ofstream file("Salvataggio_dati.txt", ios::app);
 
                     if (file.is_open()) {
-                        if(transazione.getBool() == true)
+                        if(transazione.getBool())
                             lineNameUser = "Prelievo su carta di " + acc.getNome() + " " + acc.getCognome() + ":";
                         else
                             lineNameUser = "Deposito su carta di " + acc.getNome() + " " + acc.getCognome() + ":";
@@ -462,7 +462,7 @@ void Finanza :: eliminaOperazione(Account &account, Carte &carta, Account acc, C
     bool controlloCarta = account.cercaCarta(car);
     bool controlloTransazione = carta.cercaTransazione(transazione);
 
-    if(controlloAccount == true && controlloCarta == true && controlloTransazione == true) {
+    if(controlloAccount && controlloCarta && controlloTransazione) {
         for(int i = 0; i < accounts.size(); i++) {
             if(accounts[i].getNumeroTelefono() == acc.getNumeroTelefono()) {
 
@@ -554,7 +554,7 @@ void Finanza :: stampaTransazioniAccount(Account account, Carte carta) {
 }
 
 void Finanza :: stampaRicercaAvanzata(Account account, Carte carta) {
-    int scelta, indice;
+    int scelta, indice = 0;
     cout << "In quale categoria vuoi cercare?" << endl;
     cout << " 1. Account;" << endl;
     cout << " 2. Carte;" << endl;
