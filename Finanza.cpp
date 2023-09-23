@@ -5,7 +5,7 @@ string nome, cognome, email, iba, caus;
 unsigned long int numeroTelefono, eta;
 int importo, codic;
 bool controlloEsistenza;
-Data d(01, 01, 200);
+Data d(1, 1, 200);
 
 Finanza :: Finanza() {};
 
