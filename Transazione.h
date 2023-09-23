@@ -14,8 +14,6 @@ private:
     Data data;
 
 public:
-    Transazione() {};
-
     Transazione(const Data& data, int importo, const bool& sceltaOperazione, int codice,
                 const string& causale) : data(data), importo(importo), sceltaOperazione(sceltaOperazione),
                 codice(codice), causale(causale) {};

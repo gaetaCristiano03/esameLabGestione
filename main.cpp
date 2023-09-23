@@ -16,14 +16,14 @@ void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta);
 int numeroCon, sal, impor, condizionePrelDep, cod;
 string no, cog, em, ib, cau;
 unsigned long int numeroTel, et;
-Data da;
+Data da(1, 1, 2000);
 
 int main() {
     int scelta;
     Finanza finanza;
     Account account;
     Carte carta;
-    Transazione transazione;
+    Transazione transazione(da, 1, true, 1, "a");
 
     do {
         scelta = stampaMenu();
@@ -222,7 +222,7 @@ void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta) {
     }
 
     else {
-        Transazione tran;
+        Transazione tran(da, 1, true, 1, "a");
         cout << "ELIMINAZIONE TRANSAZIONI PRELIEVO/DEPOSITO:" << endl;
         cout << "Inserisci alcuni dati dell'utente per trovarlo:" << endl;
         Account acc = controlloEsistenzaAccount(finanza);

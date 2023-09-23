@@ -10,8 +10,6 @@ private:
     int giorno, mese, anno;
 
 public:
-    Data(){};
-
     Data(int giorno, int mese, int anno) : giorno(giorno), mese(mese), anno(anno) {};
 
     string stampaData() {

@@ -5,7 +5,7 @@ string nome, cognome, email, iba, caus;
 unsigned long int numeroTelefono, eta;
 int importo, codic;
 bool controlloEsistenza;
-Data d;
+Data d(01, 01, 200);
 
 Finanza :: Finanza() {};
 
@@ -346,7 +346,7 @@ void Finanza :: eliminaAccount() {
 //CREAZIONE - MODIFICA - ELIMINAZIONE TRANSAZIONE
 void Finanza :: eseguiOperazione(Account &account, Carte &carta, Account acc, Carte car, int scelta) {
     carta.inserisciDatiTransazione(d, importo, codic, caus);
-    Transazione transazione;
+    Transazione transazione(d, 1, true, 1, "a");
     string lineNameUser;
     int num;
 
