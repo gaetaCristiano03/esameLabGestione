@@ -16,7 +16,7 @@ void stampaMenuTransazioni(Finanza finanza, Account account, Carte &carta);
 int numeroCon, sal, impor, condizionePrelDep, cod;
 string no, cog, em, ib, cau;
 unsigned long int numeroTel, et;
-Data da(1, 1, 2002);
+Data da(45, 1, 2002);
 
 int main() {
     int scelta;
