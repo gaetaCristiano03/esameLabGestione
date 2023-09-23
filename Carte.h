@@ -16,7 +16,7 @@ private:
 public:
     Carte();
 
-    Carte(const int &numeroConto, const int &saldo, const string &iban);
+    Carte(int numeroConto, int saldo, const string &iban);
 
     void inserisciDatiTransazione(Data &date, int &importo, int& codice, string& causale);
 

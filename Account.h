@@ -17,7 +17,7 @@ private:
 public:
     Account();
 
-    Account(const string &nome, const string &cognome, const string &email, const unsigned long int &numeroTelefono, const unsigned long int &eta);
+    Account(const string &nome, const string &cognome, const string &email, unsigned long int numeroTelefono, const unsigned long int &eta);
 
     void controlloDatiNelFileCarte(Account account);
 

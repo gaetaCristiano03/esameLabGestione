@@ -12,7 +12,7 @@ private:
 public:
     Data(){};
 
-    Data(const int& giorno, const int&mese, const int& anno) : giorno(giorno), mese(mese), anno(anno) {};
+    Data(int giorno, int mese, int anno) : giorno(giorno), mese(mese), anno(anno) {};
 
     string stampaData() {
         string line = to_string(giorno) + "-" + to_string(mese) + "-" + to_string(anno);

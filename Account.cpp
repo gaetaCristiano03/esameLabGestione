@@ -3,13 +3,13 @@
 
 using namespace std;
 
-int numeroConto, dataScadenza, saldo;
+int numeroConto, saldo;
 string iban;
 bool controlloEs = false;
 
 Account :: Account() {};
 
-Account :: Account(const string &nome, const string &cognome, const string &email, const unsigned long int &numeroTelefono, const unsigned long int &eta) :
+Account :: Account(const string &nome, const string &cognome, const string &email, unsigned long int numeroTelefono, const unsigned long int &eta) :
         nome(nome), cognome(cognome), email(email), numeroTelefono(numeroTelefono), eta(eta){};
 
 //CONTROLLO DATI NEL FILE
