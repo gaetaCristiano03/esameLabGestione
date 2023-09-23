@@ -23,7 +23,7 @@ public:
 
     void inserisciDatiCarta(int &numeroConto, int &saldo, string &iban);
 
-    bool cercaCarta(Carte carta);
+    bool cercaCarta(const Carte &carta);
 
     void creazioneCarta(Account account);
 

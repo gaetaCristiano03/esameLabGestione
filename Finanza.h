@@ -25,7 +25,7 @@ public:
 
     void stampaMenuVisualizzazioni(Account account, Carte carte);
 
-    bool cercaAccount(const Account account);
+    bool cercaAccount(const Account &account);
 
     void creazioneAccount();
 

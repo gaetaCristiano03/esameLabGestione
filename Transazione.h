@@ -40,8 +40,6 @@ public:
     bool getBool() const {
         return sceltaOperazione;
     }
-
-
 };
 
 #endif //ESAMELABGESTIONE_TRANSAZIONE_H

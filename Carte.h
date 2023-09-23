@@ -20,7 +20,7 @@ public:
 
     void inserisciDatiTransazione(Data &date, int &importo, int& codice, string& causale);
 
-    bool cercaTransazione(Transazione transazione);
+    bool cercaTransazione(const Transazione &transazione);
 
     void inserisciTransazione(Transazione transazione);
 

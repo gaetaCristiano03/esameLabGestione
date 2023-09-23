@@ -51,7 +51,7 @@ void Account :: inserisciDatiCarta(int &numeroConto, int &saldo, string &iban) {
 }
 
 //RICERCA - CREAZIONE - MODIFICA - ELIMINAZIONE CARTA
-bool Account :: cercaCarta(Carte carta) {
+bool Account :: cercaCarta(const Carte &carta) {
     for(int i = 0; i < carte.size(); i++) {
         if(carte[i].getNumeroConto() == carta.getNumeroConto()) {
             if(carte[i].getIban() == carta.getIban()) {

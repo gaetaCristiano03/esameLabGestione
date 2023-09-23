@@ -195,7 +195,7 @@ void Finanza :: stampaMenuVisualizzazioni(Account account, Carte carta) {
 
 }
 
-bool Finanza :: cercaAccount(const Account account) {
+bool Finanza :: cercaAccount(const Account &account) {
     for(int i = 0; i < accounts.size(); i++) {
         if(accounts[i].getNome() == account.getNome()) {
             if(accounts[i].getCognome() == account.getCognome()) {

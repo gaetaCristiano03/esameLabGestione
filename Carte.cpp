@@ -9,7 +9,7 @@ Carte :: Carte() {};
 Carte :: Carte(const int &numeroConto, const int &saldo, const string &iban) : numeroConto(numeroConto), saldo(saldo), iban(iban) {};
 
 //RICERCA TRANSAZIONE
-bool Carte :: cercaTransazione(Transazione transazione) {
+bool Carte :: cercaTransazione(const Transazione &transazione) {
     for(int i = 0; i < transazioni.size(); i++) {
         if(transazioni[i].getImporto() == transazione.getImporto()) {
             if(transazioni[i].getCausale() == transazione.getCausale()) {
