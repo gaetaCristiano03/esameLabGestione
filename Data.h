@@ -21,7 +21,7 @@ public:
             this->giorno = giorno;
             this->mese = mese;
             this->anno = anno;
-        }
+            }
         else
             throw invalid_argument("Valori non validi.");
     }
@@ -29,10 +29,6 @@ public:
     string stampaData() {
         string line = to_string(giorno) + "-" + to_string(mese) + "-" + to_string(anno);
         return line;
-    }
-
-    int getGiorno() {
-        return giorno;
     }
 };
 
