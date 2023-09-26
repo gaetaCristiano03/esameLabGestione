@@ -3,6 +3,6 @@
 
 TEST(Data, controlloCostruttore) {
     EXPECT_THROW({
-        Data d(45, 12, 2003); // Questo dovrebbe lanciare un'eccezione
+        Data d(45, 12, 2003); //Dati non validi
     }, invalid_argument);
 }
